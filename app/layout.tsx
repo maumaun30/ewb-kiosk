@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import NavBar from "@/components/NavBar";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
   subsets: ["latin"],
 });
 
@@ -24,10 +24,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${poppins.variable} antialiased`}>
+        <NavBar />
+        <main>{children}</main>
+        <footer>
+          <div className="max-w-5xl mx-auto">
+            <Image
+              src="/footer.png"
+              className="w-full"
+              alt="EastWest footer"
+              width={0}
+              height={0}
+              sizes="100vw"
+            />
+          </div>
+        </footer>
       </body>
     </html>
   );
