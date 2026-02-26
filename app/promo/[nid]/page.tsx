@@ -3,7 +3,7 @@ import type { Promo } from "@/lib/types";
 
 import RelatedPromos from "@/components/RelatedPromos";
 
-import Link from "next/link";
+import Image from "next/image";
 
 function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
   const categoryTids = new Set(
@@ -46,6 +46,21 @@ export default async function PromoPage({
   const locations = promo.field_locations;
   const card_types = promo.field_card_type;
 
+  const tags = [
+    ...(categories?.map((t) => ({
+      ...t,
+      style: "border-(--purple) bg-[rgba(84,39,133,.2)]",
+    })) ?? []),
+    ...(card_types?.map((t) => ({
+      ...t,
+      style: "border-(--pink) bg-[rgba(178,0,110,0.2)]",
+    })) ?? []),
+    ...(locations?.map((t) => ({
+      ...t,
+      style: "border-(--green) bg-[rgba(214,224,77,0.2)]",
+    })) ?? []),
+  ];
+
   const relatedPromos = getRelatedPromos(promo, allPromos);
 
   return (
@@ -59,38 +74,24 @@ export default async function PromoPage({
                 dangerouslySetInnerHTML={{ __html: promo.field_excerpt ?? "" }}
               />
 
-              <div className="mt-10 flex gap-2 items-center">
-                {categories?.map((category, index) => (
+              <div className="mt-10 flex flex-wrap gap-2 items-center">
+                {tags.map((tag, index) => (
                   <div
                     key={index}
-                    className="border border-(--purple) bg-[rgba(84,39,133,.2)] px-4 py-1 rounded-full ew-text-purple text-[10px]"
+                    className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[10px] text-nowrap`}
                   >
-                    {category.name}
-                  </div>
-                ))}
-                {card_types?.map((card, index) => (
-                  <div
-                    key={index}
-                    className="border border-(--purple) bg-[rgba(84,39,133,.2)] px-4 py-1 rounded-full ew-text-purple text-[10px]"
-                  >
-                    {card.name}
-                  </div>
-                ))}
-                {locations?.map((location, index) => (
-                  <div
-                    key={index}
-                    className="border border-(--purple) bg-[rgba(84,39,133,.2)] px-4 py-1 rounded-full ew-text-purple text-[10px]"
-                  >
-                    {location.name}
+                    {tag.name}
                   </div>
                 ))}
               </div>
             </div>
             <div className="flex-1">
-              <img
+              <Image
                 src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${promo.field_featured_image}`}
                 alt={promo.title}
                 className="w-full rounded-2xl"
+                height={0}
+                width={0}
               />
             </div>
           </div>

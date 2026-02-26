@@ -2,11 +2,15 @@
 
 import { useState, useMemo } from "react";
 
-import type { Promo, Location, CardType } from "@/lib/types";
+import type { Category, Promo, Location, CardType } from "@/lib/types";
 
 import Link from "next/link";
+import Image from "next/image";
+
+import { ArrowRight } from "lucide-react";
 
 interface PromoFilterProps {
+  categories: Category[];
   promos: Promo[];
   locations: Location[];
   card_types: CardType[];
@@ -17,10 +21,12 @@ const ITEMS_PER_PAGE = 9;
 type SortOption = "date_desc" | "date_asc" | "name_asc" | "name_desc";
 
 export default function PromoFilter({
+  categories,
   promos,
   locations,
   card_types,
 }: PromoFilterProps) {
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedCardType, setSelectedCardType] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,6 +35,11 @@ export default function PromoFilter({
 
   const filteredPromos = useMemo(() => {
     const filtered = promos.filter((promo) => {
+      const matchesCategory =
+        !selectedCategory ||
+        promo.field_categories_reference?.some(
+          (c) => c.tid === selectedCategory,
+        );
       const matchesCardType =
         !selectedCardType ||
         promo.field_card_type?.some((ct) => ct.tid === selectedCardType);
@@ -38,7 +49,9 @@ export default function PromoFilter({
       const matchesSearch =
         !searchQuery ||
         promo.title.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCardType && matchesLocation && matchesSearch;
+      return (
+        matchesCategory && matchesCardType && matchesLocation && matchesSearch
+      );
     });
 
     return filtered.sort((a, b) => {
@@ -61,13 +74,25 @@ export default function PromoFilter({
           return 0;
       }
     });
-  }, [promos, selectedCardType, selectedLocation, searchQuery, sortOption]);
+  }, [
+    promos,
+    selectedCategory,
+    selectedCardType,
+    selectedLocation,
+    searchQuery,
+    sortOption,
+  ]);
 
   const totalPages = Math.ceil(filteredPromos.length / ITEMS_PER_PAGE);
   const paginatedPromos = filteredPromos.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
+    setCurrentPage(1);
+  };
 
   const handleCardTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCardType(e.target.value);
@@ -90,6 +115,7 @@ export default function PromoFilter({
   };
 
   const handleReset = () => {
+    setSelectedCategory("");
     setSelectedCardType("");
     setSelectedLocation("");
     setSearchQuery("");
@@ -98,6 +124,7 @@ export default function PromoFilter({
   };
 
   const isFiltered =
+    selectedCategory ||
     selectedCardType ||
     selectedLocation ||
     searchQuery ||
@@ -128,6 +155,21 @@ export default function PromoFilter({
             ✕ Reset Filters
           </button>
         )}
+
+        <select
+          name="categories"
+          id="categories"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Categories</option>
+          {categories?.map((category) => (
+            <option key={category.tid} value={category.tid}>
+              {category.name}
+            </option>
+          ))}
+        </select>
 
         <select
           name="card_types"
@@ -182,52 +224,78 @@ export default function PromoFilter({
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedPromos?.map((promo) => (
-              <div
-                key={promo.nid}
-                className="relative border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white"
-              >
-                <Link
-                  href={`/promo/${promo.nid}`}
-                  className="absolute inset-0 h-full w-full z-1"
-                ></Link>
-                {promo.field_featured_image && (
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${promo.field_featured_image}`}
-                    alt={promo.title}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-800 text-lg leading-snug mb-2">
-                    {promo.title}
-                  </h3>
-                  {promo.field_excerpt && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: promo.field_excerpt }}
+            {paginatedPromos?.map((promo) => {
+              const promoTags = [
+                ...(promo.field_categories_reference?.map((t) => ({
+                  ...t,
+                  style: "border-(--purple) bg-[rgba(84,39,133,.2)]",
+                })) ?? []),
+                ...(promo.field_card_type?.map((t) => ({
+                  ...t,
+                  style: "border-(--pink) bg-[rgba(178,0,110,0.2)]",
+                })) ?? []),
+                ...(promo.field_locations?.map((t) => ({
+                  ...t,
+                  style: "border-(--green) bg-[rgba(214,224,77,0.2)]",
+                })) ?? []),
+              ];
+
+              return (
+                <div
+                  key={promo.nid}
+                  className="relative border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col"
+                >
+                  <Link
+                    href={`/promo/${promo.nid}`}
+                    className="absolute inset-0 h-full w-full z-1"
+                  ></Link>
+                  {promo.field_featured_image && (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${promo.field_featured_image}`}
+                      alt={promo.title}
+                      height={0}
+                      width={0}
+                      className="w-full h-48 object-cover"
                     />
                   )}
-                  <div className="mt-3 flex flex-wrap gap-1">
-                    {promo.field_locations?.map((loc) => (
-                      <span
-                        key={loc.tid}
-                        className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full"
+                  <div className="p-4 grow flex flex-col gap-2">
+                    <h3 className="font-semibold text-gray-800 text-lg leading-snug capitalize">
+                      {promo.title}
+                    </h3>
+                    {promo.field_excerpt && (
+                      <div
+                        className="mb-2"
+                        dangerouslySetInnerHTML={{
+                          __html: promo.field_excerpt,
+                        }}
+                      />
+                    )}
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {promoTags.map((tag) => (
+                        <span
+                          key={tag.tid}
+                          className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[10px] text-nowrap`}
+                        >
+                          {tag.name}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-auto">
+                      <Link
+                        href={`/promo/${promo.nid}`}
+                        className="flex justify-center items-center gap-4 ew-bg-pink rounded-4xl py-2 px-4"
                       >
-                        {loc.name}
-                      </span>
-                    ))}
-                    {promo.field_card_type?.map((ct) => (
-                      <span
-                        key={ct.tid}
-                        className="text-xs bg-green-50 text-green-600 px-2 py-0.5 rounded-full"
-                      >
-                        {ct.name}
-                      </span>
-                    ))}
+                        <span className="text-white font-semibold">
+                          Check It Out
+                        </span>
+                        <ArrowRight color="white" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -6,8 +6,10 @@ import { getPromos } from "@/lib/promos";
 import CatSliderWrapper from "@/components/CatSliderWrapper";
 import PromoFilter from "@/components/PromoFilter";
 
+import Image from "next/image";
+
 export default async function Category() {
-  const category = await getCategories();
+  const categories = await getCategories();
   const locations = await getLocations();
   const card_types = await getCardTypes();
   const promos = await getPromos();
@@ -19,7 +21,7 @@ export default async function Category() {
     <>
       <section className="aspect-[4] relative mb-25">
         <div className="w-full absolute inset-0 h-full z-1 pointer-events-none">
-          <img
+          <Image
             src="/all-promos-bg.webp"
             height={0}
             width={0}
@@ -39,6 +41,7 @@ export default async function Category() {
       <section className="py-20 px-5">
         <PromoFilter
           promos={filteredPromos}
+          categories={categories}
           locations={locations}
           card_types={card_types}
         />

@@ -1,26 +1,43 @@
 // components/RelatedPromos.tsx
 "use client";
 
-import Link from "next/link";
 import type { Promo } from "@/lib/types";
+
+import Link from "next/link";
+import Image from "next/image";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import { ArrowRight } from "lucide-react";
+
 function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
-  const categoryTids = new Set(current.field_categories_reference?.map((c) => c.tid) ?? []);
-  const locationTids = new Set(current.field_locations?.map((l) => l.tid) ?? []);
-  const cardTypeTids = new Set(current.field_card_type?.map((ct) => ct.tid) ?? []);
+  const categoryTids = new Set(
+    current.field_categories_reference?.map((c) => c.tid) ?? [],
+  );
+  const locationTids = new Set(
+    current.field_locations?.map((l) => l.tid) ?? [],
+  );
+  const cardTypeTids = new Set(
+    current.field_card_type?.map((ct) => ct.tid) ?? [],
+  );
 
   return all
     .filter((promo) => {
       if (promo.nid === current.nid) return false;
 
-      const matchesCategory = promo.field_categories_reference?.some((c) => categoryTids.has(c.tid));
-      const matchesLocation = promo.field_locations?.some((l) => locationTids.has(l.tid));
-      const matchesCardType = promo.field_card_type?.some((ct) => cardTypeTids.has(ct.tid));
+      const matchesCategory = promo.field_categories_reference?.some((c) =>
+        categoryTids.has(c.tid),
+      );
+      const matchesLocation = promo.field_locations?.some((l) =>
+        locationTids.has(l.tid),
+      );
+      const matchesCardType = promo.field_card_type?.some((ct) =>
+        cardTypeTids.has(ct.tid),
+      );
 
       return matchesCategory || matchesLocation || matchesCardType;
     })
@@ -53,56 +70,82 @@ export default function RelatedPromos({
             1024: { slidesPerView: 3 },
           }}
           className="pb-10"
+          wrapperClass="items-stretch"
         >
-          {relatedPromos.map((related) => (
-            <SwiperSlide key={related.nid}>
-              <Link
-                href={`/promo/${related.nid}`}
-                className="group rounded-2xl overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow flex flex-col h-full"
+          {relatedPromos.map((related) => {
+            const promoTags = [
+              ...(related.field_categories_reference?.map((t) => ({
+                ...t,
+                style: "border-(--purple) bg-[rgba(84,39,133,.2)]",
+              })) ?? []),
+              ...(related.field_card_type?.map((t) => ({
+                ...t,
+                style: "border-(--pink) bg-[rgba(178,0,110,0.2)]",
+              })) ?? []),
+              ...(related.field_locations?.map((t) => ({
+                ...t,
+                style: "border-(--green) bg-[rgba(214,224,77,0.2)]",
+              })) ?? []),
+            ];
+
+            return (
+              <SwiperSlide
+                key={related.nid}
+                style={{
+                  height: "auto !important",
+                  display: "flex !important",
+                }}
+                className="relative h-auto border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col"
               >
+                <Link
+                  href={`/promo/${related.nid}`}
+                  className="absolute inset-0 h-full w-full z-1"
+                ></Link>
                 {related.field_featured_image && (
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${related.field_featured_image}`}
-                      alt={related.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${related.field_featured_image}`}
+                    alt={related.title}
+                    height={0}
+                    width={0}
+                    className="w-full h-48 object-cover"
+                  />
                 )}
-                <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-semibold text-base leading-snug mb-2 group-hover:ew-text-purple transition-colors">
+                <div className="p-4 grow flex flex-col gap-2">
+                  <h3 className="font-semibold text-gray-800 text-lg leading-snug capitalize">
                     {related.title}
                   </h3>
-                  <div className="flex flex-wrap gap-1 mt-auto">
-                    {related.field_categories_reference?.map((c) => (
+                  {related.field_excerpt && (
+                    <div
+                      className="mb-2"
+                      dangerouslySetInnerHTML={{
+                        __html: related.field_excerpt,
+                      }}
+                    />
+                  )}
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {promoTags.map((tag) => (
                       <span
-                        key={c.tid}
-                        className="border border-(--purple) bg-[rgba(84,39,133,.2)] px-3 py-0.5 rounded-full ew-text-purple text-[10px]"
+                        key={tag.tid}
+                        className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[10px] text-nowrap`}
                       >
-                        {c.name}
-                      </span>
-                    ))}
-                    {related.field_card_type?.map((ct) => (
-                      <span
-                        key={ct.tid}
-                        className="border border-(--purple) bg-[rgba(84,39,133,.2)] px-3 py-0.5 rounded-full ew-text-purple text-[10px]"
-                      >
-                        {ct.name}
-                      </span>
-                    ))}
-                    {related.field_locations?.map((l) => (
-                      <span
-                        key={l.tid}
-                        className="border border-(--purple) bg-[rgba(84,39,133,.2)] px-3 py-0.5 rounded-full ew-text-purple text-[10px]"
-                      >
-                        {l.name}
+                        {tag.name}
                       </span>
                     ))}
                   </div>
+
+                  <div className="mt-auto">
+                    <Link
+                      href={`/promo/${related.nid}`}
+                      className="flex justify-center items-center gap-4 ew-bg-pink rounded-4xl py-2 px-4"
+                    >
+                      <span className="text-white font-semibold">Check It Out</span>
+                      <ArrowRight color="white" />
+                    </Link>
+                  </div>
                 </div>
-              </Link>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </section>
