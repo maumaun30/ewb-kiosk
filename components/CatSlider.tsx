@@ -25,6 +25,12 @@ export default function CatSlider({ categories }: Props) {
       <SwiperSlide className="basis-[calc(100%/7-((7-1)*8px)/7)] shrink-0 grow-1 h-full">
         <Link href={`/category/`} className="block h-full">
           <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-1 text-center text-white p-2 shadow-md ew-bg-purple">
+            <img
+              src="/all-promos-icon.svg"
+              height={60}
+              width={60}
+              alt="All Promos"
+            />
             <h3 className="text-md font-bold">All Promos</h3>
           </div>
         </Link>

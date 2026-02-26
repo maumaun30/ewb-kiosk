@@ -20,10 +20,10 @@ export default async function Category() {
       <section className="aspect-[4] relative mb-25">
         <div className="w-full absolute inset-0 h-full z-1 pointer-events-none">
           <img
-            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.banner}`}
+            src="/all-promos-bg.webp"
             height={0}
             width={0}
-            alt={category.name}
+            alt="All promos banner"
             sizes="100vw"
             className="w-full h-full object-cover pointer-events-none"
           />

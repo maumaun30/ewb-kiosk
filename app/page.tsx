@@ -19,6 +19,12 @@ export default async function Home() {
               <div
                 className={`rounded-xl flex items-center justify-center flex-col gap-3 aspect-square text-center text-white p-5 shadow-md ew-bg-purple`}
               >
+                <img
+                  src="/all-promos-icon.svg"
+                  height={120}
+                  width={120}
+                  alt="All Promos"
+                />
                 <h3 className="text-md text-white font-bold">All Promos</h3>
               </div>
             </Link>
