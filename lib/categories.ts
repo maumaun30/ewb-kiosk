@@ -17,8 +17,14 @@ export const getCategories = cache(async (): Promise<Category[]> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch categories");
+  // if (!res.ok) throw new Error("Failed to fetch categories");
 
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(
+      `Failed to fetch categories: ${res.status} ${res.statusText} — ${body}`,
+    );
+  }
   return res.json();
 });
 
