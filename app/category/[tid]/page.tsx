@@ -53,6 +53,7 @@ export default async function Category({
           categories={categories}
           locations={locations}
           card_types={card_types}
+          initialCategory={tid}
         />
       </section>
     </>

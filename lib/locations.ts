@@ -7,9 +7,12 @@ export const getLocations = cache(async (): Promise<Location[]> => {
   ).toString("base64");
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/promo-locations`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/kiosk/promo-locations`,
     {
-      headers: { Authorization: `Basic ${auth}` },
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "X-API-Key": `${process.env.DRUPAL_API_KEY}`,
+      },
       cache: "no-store",
     },
   );

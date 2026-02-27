@@ -14,6 +14,7 @@ interface PromoFilterProps {
   promos: Promo[];
   locations: Location[];
   card_types: CardType[];
+  initialCategory?: string;
 }
 
 const ITEMS_PER_PAGE = 9;
@@ -25,8 +26,9 @@ export default function PromoFilter({
   promos,
   locations,
   card_types,
+  initialCategory = "",
 }: PromoFilterProps) {
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [selectedCardType, setSelectedCardType] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

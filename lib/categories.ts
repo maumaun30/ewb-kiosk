@@ -7,9 +7,12 @@ export const getCategories = cache(async (): Promise<Category[]> => {
   ).toString("base64");
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/promo-categories`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/kiosk/promo-categories`,
     {
-      headers: { Authorization: `Basic ${auth}` },
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "X-API-Key": `${process.env.DRUPAL_API_KEY}`,
+      },
       cache: "no-store",
     },
   );
@@ -25,9 +28,12 @@ export const getCategory = cache(async (tid: string): Promise<Category> => {
   ).toString("base64");
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/promo-categories/${tid}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/kiosk/promo-categories/${tid}`,
     {
-      headers: { Authorization: `Basic ${auth}` },
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "X-API-Key": `${process.env.DRUPAL_API_KEY}`,
+      },
       next: { revalidate: 300 },
     },
   );
