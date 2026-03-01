@@ -21,14 +21,9 @@ export default async function Category({
   const card_types = await getCardTypes();
   const promos = await getPromos();
 
-  // Pre-filter promos for this category on the server
-  const filteredPromos = promos.filter((promo) =>
-    promo.field_categories_reference?.some((cat) => cat.tid === tid),
-  );
-
   return (
     <>
-      <section className="aspect-[4] relative mb-25">
+      <section className="aspect-16/7 relative mb-25">
         <div className="w-full absolute inset-0 h-full z-1 pointer-events-none">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.banner}`}
@@ -39,17 +34,20 @@ export default async function Category({
             className="w-full h-full object-cover pointer-events-none"
           />
         </div>
-        <div className="max-w-5xl mx-auto py-20 px-5 h-full relative z-2">
+        <div className="max-w-6xl mx-auto py-20 px-5 h-full relative z-2">
           {/* CONTENT HERE */}
         </div>
-        <div className="max-w-5xl mx-auto px-5 relative z-2 translate-y-15">
+        <div className="max-w-6xl mx-auto px-5 relative z-2 translate-y-15">
           <CatSliderWrapper />
         </div>
       </section>
 
-      <section className="py-20 px-5">
+      <section className="pb-20 pt-10 px-5">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="mb-5">Dive into our spectacular promo lineup!</h2>
+        </div>
         <PromoFilter
-          promos={filteredPromos}
+          promos={promos}
           categories={categories}
           locations={locations}
           card_types={card_types}

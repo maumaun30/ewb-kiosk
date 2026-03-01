@@ -66,7 +66,7 @@ export default async function PromoPage({
   return (
     <>
       <section>
-        <div className="max-w-5xl mx-auto py-20 px-5">
+        <div className="max-w-6xl mx-auto py-20 px-5">
           <div className="flex items-center justify-center gap-10">
             <div className="flex-1">
               <h1>{promo.title}</h1>
@@ -99,7 +99,7 @@ export default async function PromoPage({
       </section>
 
       <section>
-        <div className="max-w-5xl mx-auto py-20 px-5">
+        <div className="max-w-6xl mx-auto py-20 px-5">
           <div dangerouslySetInnerHTML={{ __html: promo.body ?? "" }} />
         </div>
       </section>

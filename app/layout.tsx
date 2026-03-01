@@ -28,7 +28,7 @@ export default function RootLayout({
         <NavBar />
         <main>{children}</main>
         <footer>
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <Image
               src="/footer.png"
               className="w-full"

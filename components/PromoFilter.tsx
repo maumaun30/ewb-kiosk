@@ -7,7 +7,7 @@ import type { Category, Promo, Location, CardType } from "@/lib/types";
 import Link from "next/link";
 import Image from "next/image";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 
 interface PromoFilterProps {
   categories: Category[];
@@ -135,24 +135,24 @@ export default function PromoFilter({
   return (
     <>
       {/* Filters */}
-      <div className="max-w-5xl mx-auto mb-10 flex flex-wrap gap-4 items-center justify-end">
+      <div className="max-w-6xl mx-auto mb-10 flex flex-wrap gap-4 items-center justify-end">
         {/* Search */}
         <input
           type="text"
           placeholder="Search promos..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+          className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink) w-full mb-5"
         />
 
-        <span className="text-sm text-gray-500 mr-auto">
+        {/* <span className="text-sm text-gray-500 mr-auto">
           {filteredPromos.length} result{filteredPromos.length !== 1 ? "s" : ""}
-        </span>
+        </span> */}
 
         {isFiltered && (
           <button
             onClick={handleReset}
-            className="px-4 py-2 text-sm rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors"
+            className="px-5 py-3 text-md rounded-4xl border border-black bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors"
           >
             ✕ Reset Filters
           </button>
@@ -163,7 +163,7 @@ export default function PromoFilter({
           id="categories"
           value={selectedCategory}
           onChange={handleCategoryChange}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
         >
           <option value="">All Categories</option>
           {categories?.map((category) => (
@@ -178,7 +178,7 @@ export default function PromoFilter({
           id="card_types"
           value={selectedCardType}
           onChange={handleCardTypeChange}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
         >
           <option value="">All Card Types</option>
           {card_types?.map((card_type) => (
@@ -193,7 +193,7 @@ export default function PromoFilter({
           id="locations"
           value={selectedLocation}
           onChange={handleLocationChange}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
         >
           <option value="">All Locations</option>
           {locations?.map((location) => (
@@ -209,7 +209,7 @@ export default function PromoFilter({
           id="sort"
           value={sortOption}
           onChange={handleSortChange}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
         >
           <option value="date_desc">Date: Newest First</option>
           <option value="date_asc">Date: Oldest First</option>
@@ -219,7 +219,7 @@ export default function PromoFilter({
       </div>
 
       {/* Promo Grid */}
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {paginatedPromos.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             No promos found for the selected filters.
@@ -245,7 +245,7 @@ export default function PromoFilter({
               return (
                 <div
                   key={promo.nid}
-                  className="relative border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col"
+                  className="relative border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col"
                 >
                   <Link
                     href={`/promo/${promo.nid}`}
@@ -257,7 +257,7 @@ export default function PromoFilter({
                       alt={promo.title}
                       height={0}
                       width={0}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-60 object-cover"
                     />
                   )}
                   <div className="p-4 grow flex flex-col gap-2">
@@ -272,7 +272,7 @@ export default function PromoFilter({
                         }}
                       />
                     )}
-                    <div className="flex flex-wrap gap-1 mb-4">
+                    <div className="flex flex-wrap gap-x-1 gap-y-2 mb-4">
                       {promoTags.map((tag) => (
                         <span
                           key={tag.tid}
@@ -304,13 +304,13 @@ export default function PromoFilter({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="max-w-5xl mx-auto mt-10 flex justify-center items-center gap-2">
+        <div className="max-w-6xl mx-auto mt-10 flex justify-center items-center gap-3">
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-3 py-2 rounded-md border border-gray-300 text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+            className="p-3 rounded-full aspect-square text-sm disabled:hidden ew-bg-pink"
           >
-            ← Prev
+            <ArrowLeft color="white" />
           </button>
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
@@ -327,7 +327,7 @@ export default function PromoFilter({
               return null;
             if (showEllipsisBefore || showEllipsisAfter) {
               return (
-                <span key={`ellipsis-${page}`} className="px-2 text-gray-400">
+                <span key={`ellipsis-${page}`} className="px-2 text-black">
                   …
                 </span>
               );
@@ -337,10 +337,8 @@ export default function PromoFilter({
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`w-9 h-9 rounded-md border text-sm transition-colors ${
-                  currentPage === page
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "border-gray-300 hover:bg-gray-100 text-gray-700"
+                className={`bg-transparent text-black border-0 text-md ${
+                  currentPage === page ? "ew-text-pink underline font-semibold" : "text-black"
                 }`}
               >
                 {page}
@@ -351,9 +349,9 @@ export default function PromoFilter({
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-3 py-2 rounded-md border border-gray-300 text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+            className="p-3 rounded-full aspect-square text-sm disabled:hidden ew-bg-pink"
           >
-            Next →
+            <ArrowRight color="white" />
           </button>
         </div>
       )}

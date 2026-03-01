@@ -57,7 +57,7 @@ export default function RelatedPromos({
 
   return (
     <section>
-      <div className="max-w-5xl mx-auto py-20 px-5">
+      <div className="max-w-6xl mx-auto py-20 px-5">
         <h2 className="text-2xl font-semibold mb-8">Related Promos</h2>
         <Swiper
           modules={[Navigation, Pagination]}
@@ -122,7 +122,7 @@ export default function RelatedPromos({
                       }}
                     />
                   )}
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  <div className="flex flex-wrap gap-x-1 gap-y-2 mb-4">
                     {promoTags.map((tag) => (
                       <span
                         key={tag.tid}

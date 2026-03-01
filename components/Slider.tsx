@@ -25,7 +25,7 @@ export default function Slider() {
       onSlideChange={() => console.log("slide change")}
     >
       <SwiperSlide>
-        <div className="max-w-5xl py-20 px-5 mx-auto">
+        <div className="max-w-6xl py-20 px-5 mx-auto aspect-video flex flex-col justify-center">
           <div className="flex justify-end">
             <div className="w-1/2">
               <h1 className="ew-text-purple text-3xl font-bold mb-5">

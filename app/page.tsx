@@ -13,8 +13,8 @@ export default async function Home() {
       <header>
         <Slider />
       </header>
-      <section className="ew-bg-purple py-20">
-        <div className="max-w-5xl mx-auto text-center">
+      <section className="ew-bg-purple py-20 px-5">
+        <div className="max-w-6xl mx-auto text-center">
           <div>
             <h2 className="ew-text-green mb-5">EastWest Card Promos</h2>
             <p className="text-white">Make every swipe count with your EastWest card.</p>

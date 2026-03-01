@@ -24,6 +24,7 @@ export default function CatSlider({ categories }: Props) {
       slidesPerView={"auto"}
       navigation
       wrapperClass="gap-2"
+      className="w-[90%]"
     >
       <SwiperSlide className="basis-[calc(100%/7-((7-1)*8px)/7)] shrink-0 grow-1 h-full">
         <Link href={`/category/`} className="block h-full">

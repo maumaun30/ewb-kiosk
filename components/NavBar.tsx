@@ -5,7 +5,7 @@ import { House } from "lucide-react";
 export default function NavBar() {
   return (
     <nav className="ew-bg-green">
-      <div className="max-w-5xl mx-auto p-5">
+      <div className="max-w-6xl mx-auto p-5">
         <div className="flex items-center justify-between">
           <div>
             <Image
