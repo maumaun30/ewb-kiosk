@@ -20,6 +20,7 @@ export interface Promo {
   nid: string;
   title: string;
   authored_on: string;
+  field_promo_duration?: string;
   field_excerpt?: string;
   body?: string;
   field_featured_image?: string;

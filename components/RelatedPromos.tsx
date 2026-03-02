@@ -1,10 +1,9 @@
 // components/RelatedPromos.tsx
 "use client";
 
-import type { Promo } from "@/lib/types";
+import { useState } from "react";
 
-import Link from "next/link";
-import Image from "next/image";
+import type { Promo } from "@/lib/types";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -12,7 +11,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+
+import PromoCard from "@/components/PromoCard";
 
 function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
   const categoryTids = new Set(
@@ -52,101 +53,83 @@ export default function RelatedPromos({
   all: Promo[];
 }) {
   const relatedPromos = getRelatedPromos(current, all);
+  const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
   if (relatedPromos.length === 0) return null;
 
   return (
     <section>
       <div className="max-w-6xl mx-auto py-20 px-5">
-        <h2 className="text-2xl font-semibold mb-8">Related Promos</h2>
+        <div className="flex items-center justify-between mb-8">
+          <h2>Related Promos</h2>
+        </div>
         <Swiper
           modules={[Navigation, Pagination]}
           slidesPerView={1}
           spaceBetween={24}
-          navigation
-          pagination={{ clickable: true }}
+          navigation={{ prevEl, nextEl }}
+          pagination={{
+            clickable: true,
+            el: ".related-pagination",
+            bulletClass: "related-bullet",
+            bulletActiveClass: "related-bullet-active",
+          }}
           breakpoints={{
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
           }}
-          className="pb-10"
-          wrapperClass="items-stretch"
+          className="pb-12"
+          wrapperClass="pb-5"
+          style={{ alignItems: "stretch" }}
         >
-          {relatedPromos.map((related) => {
-            const promoTags = [
-              ...(related.field_categories_reference?.map((t) => ({
-                ...t,
-                style: "border-(--purple) bg-[rgba(84,39,133,.2)]",
-              })) ?? []),
-              ...(related.field_card_type?.map((t) => ({
-                ...t,
-                style: "border-(--pink) bg-[rgba(178,0,110,0.2)]",
-              })) ?? []),
-              ...(related.field_locations?.map((t) => ({
-                ...t,
-                style: "border-(--green) bg-[rgba(214,224,77,0.2)]",
-              })) ?? []),
-            ];
-
-            return (
-              <SwiperSlide
-                key={related.nid}
-                style={{
-                  height: "auto !important",
-                  display: "flex !important",
-                }}
-                className="relative h-auto border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col"
-              >
-                <Link
-                  href={`/promo/${related.nid}`}
-                  className="absolute inset-0 h-full w-full z-1"
-                ></Link>
-                {related.field_featured_image && (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${related.field_featured_image}`}
-                    alt={related.title}
-                    height={0}
-                    width={0}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
-                <div className="p-4 grow flex flex-col gap-2">
-                  <h3 className="font-semibold text-gray-800 text-lg leading-snug capitalize">
-                    {related.title}
-                  </h3>
-                  {related.field_excerpt && (
-                    <div
-                      className="mb-2"
-                      dangerouslySetInnerHTML={{
-                        __html: related.field_excerpt,
-                      }}
-                    />
-                  )}
-                  <div className="flex flex-wrap gap-x-1 gap-y-2 mb-4">
-                    {promoTags.map((tag) => (
-                      <span
-                        key={tag.tid}
-                        className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[10px] text-nowrap`}
-                      >
-                        {tag.name}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto">
-                    <Link
-                      href={`/promo/${related.nid}`}
-                      className="flex justify-center items-center gap-4 ew-bg-pink rounded-4xl py-2 px-4"
-                    >
-                      <span className="text-white font-semibold">Check It Out</span>
-                      <ArrowRight color="white" />
-                    </Link>
-                  </div>
-                </div>
-              </SwiperSlide>
-            );
-          })}
+          {relatedPromos.map((related) => (
+            <SwiperSlide key={related.nid} className="related">
+              <PromoCard promo={related} />
+            </SwiperSlide>
+          ))}
         </Swiper>
+        <div className="flex items-center justify-between">
+          <div className="related-pagination flex items-center gap-3" />
+          <div className="flex items-center gap-2">
+            <button
+              ref={setPrevEl}
+              aria-label="Previous"
+              className="flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <ArrowLeft color="white" size={18} strokeWidth={2.5} />
+            </button>
+            <button
+              ref={setNextEl}
+              aria-label="Next"
+              className="flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink text-white hover:opacity-80 transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <ArrowRight size={18} strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
+
+        <style>{`
+          .related.swiper-slide {
+            height: auto !important;
+            display: flex !important;
+          }
+          .related-bullet {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background: #cccccc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.7;
+          }
+          .related-bullet-active {
+            background: var(--pink);
+            opacity: 1;
+            transform: scale(1.5);
+          }
+        `}</style>
       </div>
     </section>
   );

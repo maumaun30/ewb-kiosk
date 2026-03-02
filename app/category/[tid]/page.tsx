@@ -44,7 +44,7 @@ export default async function Category({
 
       <section className="pb-20 pt-10 px-5">
         <div className="max-w-6xl mx-auto">
-          <h2 className="mb-5">Dive into our spectacular promo lineup!</h2>
+          <h2 className="mb-10">Dive into our spectacular promo lineup!</h2>
         </div>
         <PromoFilter
           promos={promos}

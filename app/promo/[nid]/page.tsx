@@ -69,7 +69,13 @@ export default async function PromoPage({
         <div className="max-w-6xl mx-auto py-20 px-5">
           <div className="flex items-center justify-center gap-10">
             <div className="flex-1">
-              <h1>{promo.title}</h1>
+              <h1 className="mb-2">{promo.title}</h1>
+              {promo.field_promo_duration && (
+                <div className="mb-10">
+                  <em className="font-light">{promo.field_promo_duration}</em>
+                </div>
+              )}
+
               <div
                 dangerouslySetInnerHTML={{ __html: promo.field_excerpt ?? "" }}
               />
@@ -78,7 +84,7 @@ export default async function PromoPage({
                 {tags.map((tag, index) => (
                   <div
                     key={index}
-                    className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[10px] text-nowrap`}
+                    className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[12px] text-nowrap`}
                   >
                     {tag.name}
                   </div>
@@ -98,8 +104,9 @@ export default async function PromoPage({
         </div>
       </section>
 
-      <section>
-        <div className="max-w-6xl mx-auto py-20 px-5">
+      <section className="promo-mechanics">
+        <div className="max-w-6xl mx-auto pb-20 px-5">
+          <h2 className="mb-5">Promo Mechanics</h2>
           <div dangerouslySetInnerHTML={{ __html: promo.body ?? "" }} />
         </div>
       </section>

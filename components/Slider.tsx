@@ -21,16 +21,16 @@ export default function Slider() {
       navigation
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log("slide change")}
+      // onSwiper={(swiper) => console.log(swiper)}
+      // onSlideChange={() => console.log("slide change")}
     >
       <SwiperSlide>
         <div className="max-w-6xl py-20 px-5 mx-auto aspect-video flex flex-col justify-center">
           <div className="flex justify-end">
             <div className="w-1/2">
-              <h1 className="ew-text-purple text-3xl font-bold mb-5">
+              <h2 className="ew-text-purple mb-5">
                 Start Your Banking Journey with Ease
-              </h1>
+              </h2>
               <p className="mb-5">
                 Open your EastWest account anytime, anywhere with EasyWay.
               </p>

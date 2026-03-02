@@ -41,5 +41,6 @@ export const getPromo = cache(async (nid: string): Promise<Promo> => {
   if (!res.ok) throw new Error("Failed to fetch promo");
 
   const data = await res.json();
+
   return data[0];
 });

@@ -8,12 +8,14 @@ export default function NavBar() {
       <div className="max-w-6xl mx-auto p-5">
         <div className="flex items-center justify-between">
           <div>
-            <Image
-              src="/ew-logo_0.png"
-              height={80}
-              width={200}
-              alt="EastWest official logo"
-            />
+            <Link href="/">
+              <Image
+                src="/ew-logo_0.png"
+                height={80}
+                width={200}
+                alt="EastWest official logo"
+              />
+            </Link>
           </div>
           <div>
             <Link href="/">

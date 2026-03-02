@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f9f9fb;
   --foreground: #171717;
   --purple: #3c1b5e;
   --pink: #b2006f;
@@ -13,43 +13,117 @@
   --color-foreground: var(--foreground);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Poppins", Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-size: 20px;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-bottom: 20px;
+  }
+
+  h1,
+  h2 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--foreground);
+  }
+
+  table {
+    background-color: #fff;
+    border: 1px solid #000;
+    border-collapse: collapse;
+    border-radius: 24px;
+    border-spacing: 0;
+    margin: 30px 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  table th {
+    background-color: #542685;
+    border: 1px solid #000;
+    color: #fff;
+    font-weight: 600;
+    padding: 24px;
+    text-align: center;
+  }
+
+  table td {
+    border: 1px solid #000;
+    color: #000;
+    font-size: 1em;
+    font-weight: 400;
+    padding: 24px;
+    text-align: center;
+  }
 }
 
-h1,
-h2 {
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 1.3;
+@layer components {
+  .ew-text-purple {
+    color: var(--purple);
+  }
+
+  .ew-text-pink {
+    color: var(--pink);
+  }
+
+  .ew-text-green {
+    color: var(--green);
+  }
+
+  .ew-bg-purple {
+    background-color: var(--purple);
+  }
+
+  .ew-bg-pink {
+    background-color: var(--pink);
+  }
+
+  .ew-bg-green {
+    background-color: var(--green);
+  }
 }
 
-a {
-  color: var(--foreground);
-}
+@layer utilities {
+  .promo-mechanics .table-fc-hl {
+    margin: 32px 0;
+  }
 
-.ew-text-purple {
-  color: var(--purple);
-}
+  .promo-mechanics .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+  }
 
-.ew-text-pink {
-  color: var(--pink);
-}
+  .promo-mechanics ol {
+    list-style: decimal;
+  }
 
-.ew-text-green {
-  color: var(--green);
-}
+  .promo-mechanics ul {
+    list-style: disc;
+  }
 
-.ew-bg-purple {
-  background-color: var(--purple);
-}
+  .promo-mechanics ol,
+  .promo-mechanics ul {
+    padding-left: 1.5rem;
+  }
 
-.ew-bg-pink {
-  background-color: var(--pink);
-}
-
-.ew-bg-green {
-  background-color: var(--green);
+  .promo-mechanics ol li,
+  .promo-mechanics ul li {
+    margin-bottom: 1rem;
+  }
 }
