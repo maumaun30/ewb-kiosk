@@ -59,12 +59,15 @@ export default function PromoCard({ promo }: PromoCardProps) {
           <div
             className="mb-2"
             dangerouslySetInnerHTML={{
-              __html: promo.field_excerpt
-                .replace(/<[^>]*>/g, " ")
-                .trim()
-                .split(/\s+/)
-                .slice(0, 20)
-                .join(" "),
+              __html: (() => {
+                const words = promo.field_excerpt
+                  .replace(/<[^>]*>/g, " ")
+                  .trim()
+                  .split(/\s+/);
+                return words.length > 20
+                  ? words.slice(0, 20).join(" ") + "…"
+                  : words.join(" ");
+              })(),
             }}
           />
         )}
