@@ -1,50 +1,115 @@
 "use client";
 
+import { useState } from "react";
+
+import type { Slide } from "@/lib/types";
+
 import Link from "next/link";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 
-export default function Slider() {
+export default function Slider({ slides }: Slide[]) {
+  const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
+
   return (
-    <Swiper
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      spaceBetween={50}
-      slidesPerView={1}
-      navigation
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-      // onSwiper={(swiper) => console.log(swiper)}
-      // onSlideChange={() => console.log("slide change")}
-    >
-      <SwiperSlide>
-        <div className="max-w-6xl py-20 px-5 mx-auto aspect-video flex flex-col justify-center">
-          <div className="flex justify-end">
-            <div className="w-1/2">
-              <h2 className="ew-text-purple mb-5">
-                Start Your Banking Journey with Ease
-              </h2>
-              <p className="mb-5">
-                Open your EastWest account anytime, anywhere with EasyWay.
-              </p>
-              <Link
-                href="/"
-                className="ew-bg-purple ew-text-green rounded-sm px-5 py-3 font-bold inline-flex gap-2 items-center"
-              >
-                <span>Open Your Account Today</span>
-                <ArrowRight />
-              </Link>
+    <div className="relative">
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation={{ prevEl, nextEl }}
+        loop={true}
+        autoplay={{
+          delay: 7000,
+        }}
+        pagination={{
+          clickable: true,
+          el: ".related-pagination",
+          bulletClass: "related-bullet",
+          bulletActiveClass: "related-bullet-active",
+        }}
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index} className="relative">
+            {slide.background_image && (
+              <div className="absolute inset-0 h-full w-full z-1">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${slide.background_image}`}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            )}
+            <div className="max-w-6xl py-20 px-5 mx-auto aspect-video flex flex-col justify-center">
+              <div className="flex justify-end relative z-2">
+                <div className="w-1/2">
+                  <div dangerouslySetInnerHTML={{ __html: slide.body ?? "" }} />
+
+                  <Link
+                    href="/"
+                    className="ew-bg-purple ew-text-green rounded-sm px-5 py-3 font-bold inline-flex gap-2 items-center"
+                  >
+                    <span>Open Your Account Today</span>
+                    <ArrowRight />
+                  </Link>
+                </div>
+              </div>
             </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <div className="absolute bottom-0 left-0 z-1 w-full">
+        <div className="flex items-center justify-between max-w-6xl mx-auto p-5">
+          <div className="related-pagination flex items-center gap-3" />
+          <div className="flex items-center gap-2">
+            <button
+              ref={setPrevEl}
+              aria-label="Previous"
+              className="flex items-center justify-center w-12 h-12 rounded-full ew-bg-purple transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <ArrowLeft color="white" size={18} strokeWidth={2.5} />
+            </button>
+            <button
+              ref={setNextEl}
+              aria-label="Next"
+              className="flex items-center justify-center w-12 h-12 rounded-full ew-bg-purple text-white transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <ArrowRight size={18} strokeWidth={2.5} />
+            </button>
           </div>
         </div>
-      </SwiperSlide>
-    </Swiper>
+      </div>
+
+      <style>{`
+          .related.swiper-slide {
+            height: auto !important;
+            display: flex !important;
+          }
+          .related-bullet {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background: #cccccc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.7;
+          }
+          .related-bullet-active {
+            background: var(--purple);
+            opacity: 1;
+            transform: scale(1.5);
+          }
+        `}</style>
+    </div>
   );
 }

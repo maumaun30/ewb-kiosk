@@ -11,9 +11,11 @@ export default function NavBar() {
             <Link href="/">
               <Image
                 src="/ew-logo_0.png"
-                height={80}
-                width={200}
+                height={0}
+                width={0}
                 alt="EastWest official logo"
+                className="w-50 h-auto"
+                loading="eager"
               />
             </Link>
           </div>

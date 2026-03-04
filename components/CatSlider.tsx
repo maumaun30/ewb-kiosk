@@ -24,14 +24,13 @@ export default function CatSlider({ categories }: Props) {
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
   return (
-    <>
+    <div className="w-[90%] mx-auto">
       <Swiper
         modules={[Navigation]}
         spaceBetween={0}
         slidesPerView={"auto"}
         navigation={{ prevEl, nextEl }}
         wrapperClass="gap-2"
-        className="w-[90%]"
       >
         <SwiperSlide className="basis-[calc(100%/6-((6-1)*8px)/6)] shrink-0 grow-1 h-full">
           <Link href={`/category/`} className="block h-full">
@@ -43,7 +42,7 @@ export default function CatSlider({ categories }: Props) {
                 alt="All Promos"
                 className="aspect-square"
               />
-              <h3 className="text-md mt-2">All Promos</h3>
+              <h3 className="text-md m-0">All Promos</h3>
             </div>
           </Link>
         </SwiperSlide>
@@ -62,26 +61,26 @@ export default function CatSlider({ categories }: Props) {
                   alt={category.name}
                   className="aspect-square"
                 />
-                <h3 className="text-md mt-2">{category.name}</h3>
+                <h3 className="text-md m-0">{category.name}</h3>
               </div>
             </Link>
           </SwiperSlide>
         ))}
       </Swiper>
-        <button
-          ref={setPrevEl}
-          aria-label="Previous"
-          className="absolute left-[calc(5%-6px)] top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed z-1"
-        >
-          <ArrowLeft color="white" size={18} strokeWidth={2.5} />
-        </button>
-        <button
-          ref={setNextEl}
-          aria-label="Next"
-          className="absolute right-[calc(5%-6px)] top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink text-white hover:opacity-80 transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed z-1"
-        >
-          <ArrowRight size={18} strokeWidth={2.5} />
-        </button>
-    </>
+      <button
+        ref={setPrevEl}
+        aria-label="Previous"
+        className="absolute left-[calc(5%-6px)] top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed z-1"
+      >
+        <ArrowLeft color="white" size={18} strokeWidth={2.5} />
+      </button>
+      <button
+        ref={setNextEl}
+        aria-label="Next"
+        className="absolute right-[calc(5%-6px)] top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink text-white hover:opacity-80 transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed z-1"
+      >
+        <ArrowRight size={18} strokeWidth={2.5} />
+      </button>
+    </div>
   );
 }

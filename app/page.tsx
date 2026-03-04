@@ -1,4 +1,5 @@
 import { getCategories } from "@/lib/categories";
+import { getSlides } from "@/lib/slides";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -7,11 +8,12 @@ import Slider from "@/components/Slider";
 
 export default async function Home() {
   const categories = await getCategories();
+  const allSlides = await getSlides();
 
   return (
     <>
       <header>
-        <Slider />
+        <Slider slides={allSlides} />
       </header>
       <section className="ew-bg-purple py-20 px-5">
         <div className="max-w-6xl mx-auto text-center">

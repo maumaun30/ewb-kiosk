@@ -28,3 +28,8 @@ export interface Promo {
   field_locations?: Location[];
   field_card_type?: CardType[];
 }
+
+export interface Slide {
+  body: string;
+  background_image?: string;
+}

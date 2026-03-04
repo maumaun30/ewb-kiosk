@@ -1,10 +1,15 @@
+import { Suspense } from "react";
+
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Image from "next/image";
 import "./globals.css";
 
+import { NavigationProvider } from "@/context/NavigationContext";
+
 import NavBar from "@/components/NavBar";
 import BackButton from "@/components/BackButton";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -25,9 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        <NavBar />
-        <BackButton />
-        <main>{children}</main>
+        <NavigationProvider>
+          <Suspense>
+            <LoadingOverlay />
+          </Suspense>
+          <NavBar />
+          <BackButton />
+          <main>{children}</main>
+        </NavigationProvider>
         <footer>
           <div className="max-w-6xl mx-auto">
             <Image

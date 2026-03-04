@@ -60,7 +60,7 @@ export default function RelatedPromos({
 
   return (
     <section>
-      <div className="max-w-6xl mx-auto py-20 px-5">
+      <div className="max-w-6xl mx-auto pb-20 px-5">
         <div className="flex items-center justify-between mb-8">
           <h2>Related Promos</h2>
         </div>
@@ -102,7 +102,7 @@ export default function RelatedPromos({
             <button
               ref={setNextEl}
               aria-label="Next"
-              className="flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink text-white hover:opacity-80 transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-12 h-12 rounded-full ew-bg-pink text-white transition-opacity duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <ArrowRight size={18} strokeWidth={2.5} />
             </button>

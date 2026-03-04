@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 
 import type { Category, Promo, Location, CardType } from "@/lib/types";
 
@@ -33,6 +33,13 @@ export default function PromoFilter({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState<SortOption>("date_desc");
+
+  // Ref attached to the top of the promo grid — used to scroll into view on page change
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  const scrollToGrid = () => {
+    gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const filteredPromos = useMemo(() => {
     const filtered = promos.filter((promo) => {
@@ -122,6 +129,11 @@ export default function PromoFilter({
     setSearchQuery("");
     setSortOption("date_desc");
     setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    scrollToGrid();
   };
 
   const isFiltered =
@@ -237,8 +249,8 @@ export default function PromoFilter({
         )}
       </div>
 
-      {/* Promo Grid */}
-      <div className="max-w-6xl mx-auto">
+      {/* Scroll anchor sits just above the grid */}
+      <div ref={gridRef} className="max-w-6xl mx-auto">
         {paginatedPromos.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             No promos found for the selected filters.
@@ -256,7 +268,7 @@ export default function PromoFilter({
       {totalPages > 1 && (
         <div className="max-w-6xl mx-auto mt-10 flex justify-center items-center gap-5">
           <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
             className="p-3 rounded-full aspect-square text-sm disabled:hidden ew-bg-pink"
           >
@@ -286,7 +298,7 @@ export default function PromoFilter({
             return (
               <button
                 key={page}
-                onClick={() => setCurrentPage(page)}
+                onClick={() => handlePageChange(page)}
                 className={`bg-transparent border-0 text-md ${
                   currentPage === page
                     ? "ew-text-pink underline font-semibold"
@@ -299,7 +311,9 @@ export default function PromoFilter({
           })}
 
           <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            onClick={() =>
+              handlePageChange(Math.min(totalPages, currentPage + 1))
+            }
             disabled={currentPage === totalPages}
             className="p-3 rounded-full aspect-square text-sm disabled:hidden ew-bg-pink"
           >
