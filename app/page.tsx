@@ -43,7 +43,7 @@ export default async function Home() {
                     alt="All Promos"
                     className="aspect-square"
                   />
-                  <h3 className="text-md text-white">All Promos</h3>
+                  <h3 className="text-md text-white mb-0">All Promos</h3>
                 </div>
               </Link>
 
