@@ -49,7 +49,7 @@ export default function PromoCard({ promo }: PromoCardProps) {
       )}
 
       <div className="p-4 grow flex flex-col gap-2">
-        <h3 className="text-2xl leading-snug capitalize">{promo.title}</h3>
+        <h3 className="text-2xl leading-snug capitalize mb-0">{promo.title}</h3>
 
         {promo.field_promo_duration && (
           <em className="font-light mb-5">{promo.field_promo_duration}</em>
