@@ -15,7 +15,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-export default function Slider({ slides }: Slide[]) {
+interface SliderProps {
+  slides: Slide[];
+}
+
+const Slider: React.FC<SliderProps> = ({ slides }) => {
   const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
@@ -112,4 +116,6 @@ export default function Slider({ slides }: Slide[]) {
         `}</style>
     </div>
   );
-}
+};
+
+export default Slider;
