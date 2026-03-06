@@ -1,5 +1,6 @@
 import { cache } from "react";
 import type { CardType } from "@/lib/types";
+import { ApiError } from "@/lib/errors";
 
 export const getCardTypes = cache(async (): Promise<CardType[]> => {
   const auth = Buffer.from(
@@ -17,7 +18,13 @@ export const getCardTypes = cache(async (): Promise<CardType[]> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch card types");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(
+      `Failed to fetch card types: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
+    );
+  }
 
   return res.json();
 });

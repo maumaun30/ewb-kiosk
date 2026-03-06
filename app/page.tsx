@@ -64,7 +64,7 @@ export default async function Home() {
                       alt={category.name}
                       className="aspect-square"
                     />
-                    <h3 className="text-md text-white">{category.name}</h3>
+                    <h3 className="text-md text-white mb-0">{category.name}</h3>
                   </div>
                 </Link>
               ))}

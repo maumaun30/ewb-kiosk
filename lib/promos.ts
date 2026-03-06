@@ -1,5 +1,6 @@
 import { cache } from "react";
 import type { Promo } from "@/lib/types";
+import { ApiError } from "@/lib/errors";
 
 export const getPromos = cache(async (): Promise<Promo[]> => {
   const auth = Buffer.from(
@@ -17,7 +18,13 @@ export const getPromos = cache(async (): Promise<Promo[]> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch promos");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(
+      `Failed to fetch promos: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
+    );
+  }
 
   return res.json();
 });
@@ -38,7 +45,13 @@ export const getPromo = cache(async (nid: string): Promise<Promo> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch promo");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(
+      `Failed to fetch promo: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
+    );
+  }
 
   const data = await res.json();
 

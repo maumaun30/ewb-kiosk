@@ -1,5 +1,6 @@
 import { cache } from "react";
 import type { Category } from "@/lib/types";
+import { ApiError } from "@/lib/errors";
 
 export const getCategories = cache(async (): Promise<Category[]> => {
   const auth = Buffer.from(
@@ -17,14 +18,14 @@ export const getCategories = cache(async (): Promise<Category[]> => {
     },
   );
 
-  // if (!res.ok) throw new Error("Failed to fetch categories");
-
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(
+    throw new ApiError(
       `Failed to fetch categories: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
     );
   }
+
   return res.json();
 });
 
@@ -44,7 +45,13 @@ export const getCategory = cache(async (tid: string): Promise<Category> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch category");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(
+      `Failed to fetch category: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
+    );
+  }
 
   const data = await res.json();
   return data[0];

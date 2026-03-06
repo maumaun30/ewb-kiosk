@@ -10,6 +10,7 @@ import { NavigationProvider } from "@/context/NavigationContext";
 import NavBar from "@/components/NavBar";
 import BackButton from "@/components/BackButton";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import IdleOverlay from "@/components/IdleOverlay";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Suspense>
             <LoadingOverlay />
           </Suspense>
+          <IdleOverlay />
           <NavBar />
           <BackButton />
           <main>{children}</main>

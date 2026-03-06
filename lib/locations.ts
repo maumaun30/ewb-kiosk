@@ -1,5 +1,6 @@
 import { cache } from "react";
 import type { Location } from "@/lib/types";
+import { ApiError } from "@/lib/errors";
 
 export const getLocations = cache(async (): Promise<Location[]> => {
   const auth = Buffer.from(
@@ -17,7 +18,13 @@ export const getLocations = cache(async (): Promise<Location[]> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch locations");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(
+      `Failed to fetch locations: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
+    );
+  }
 
   return res.json();
 });
