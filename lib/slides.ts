@@ -1,5 +1,6 @@
 import { cache } from "react";
 import type { Slide } from "@/lib/types";
+import { ApiError } from "@/lib/errors";
 
 export const getSlides = cache(async (): Promise<Slide[]> => {
   const auth = Buffer.from(
@@ -17,7 +18,13 @@ export const getSlides = cache(async (): Promise<Slide[]> => {
     },
   );
 
-  if (!res.ok) throw new Error("Failed to fetch slides");
+  if (!res.ok) {
+    const body = await res.text();
+    throw new ApiError(
+      `Failed to fetch slides: ${res.status} ${res.statusText} — ${body}`,
+      res.status,
+    );
+  }
 
   return res.json();
 });

@@ -1,16 +1,24 @@
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { House } from "lucide-react";
+import type { Data } from "@/lib/settings";
 
-export default function NavBar() {
+interface SettingsProps {
+  settings: Data;
+}
+
+const NavBar: React.FC<SettingsProps> = ({ settings }) => {
+  const logoUrl =
+    settings?.navigation?.fields?.logo_url?.value ?? "/ew-logo_0.png";
+
   return (
     <nav className="ew-bg-green">
       <div className="max-w-6xl mx-auto p-5">
         <div className="flex items-center justify-between">
           <div>
             <Link href="/">
-              <Image
-                src="/ew-logo_0.png"
+              <img
+                src={logoUrl}
                 height={0}
                 width={0}
                 alt="EastWest official logo"
@@ -28,4 +36,6 @@ export default function NavBar() {
       </div>
     </nav>
   );
-}
+};
+
+export default NavBar;

@@ -42,7 +42,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
         }}
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index} className="relative">
+          <SwiperSlide key={index} className="relative home-slide">
             {slide.background_image && (
               <div className="absolute inset-0 h-full w-full z-1">
                 <img
@@ -57,13 +57,15 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                 <div className="w-1/2">
                   <div dangerouslySetInnerHTML={{ __html: slide.body ?? "" }} />
 
-                  <Link
-                    href="/"
-                    className="ew-bg-purple ew-text-green rounded-sm px-5 py-3 font-bold inline-flex gap-2 items-center"
-                  >
-                    <span>Open Your Account Today</span>
-                    <ArrowRight />
-                  </Link>
+                  {slide.field_cta_link && slide.field_cta_title && (
+                    <Link
+                      href={slide.field_cta_link}
+                      className="ew-bg-purple ew-text-green rounded-4xl py-2 px-10 font-semibold inline-flex gap-4 items-center"
+                    >
+                      <span>{slide.field_cta_title}</span>
+                      <ArrowRight />
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

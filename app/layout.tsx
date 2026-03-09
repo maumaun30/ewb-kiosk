@@ -8,9 +8,13 @@ import "./globals.css";
 import { NavigationProvider } from "@/context/NavigationContext";
 
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import BackButton from "@/components/BackButton";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import IdleOverlay from "@/components/IdleOverlay";
+import { getSettings } from "@/lib/settings";
+
+const allSettings = await getSettings();
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -35,23 +39,12 @@ export default function RootLayout({
           <Suspense>
             <LoadingOverlay />
           </Suspense>
-          <IdleOverlay />
-          <NavBar />
+          <IdleOverlay settings={allSettings} />
+          <NavBar settings={allSettings} />
           <BackButton />
           <main>{children}</main>
         </NavigationProvider>
-        <footer>
-          <div className="max-w-6xl mx-auto">
-            <Image
-              src="/footer.png"
-              className="w-full"
-              alt="EastWest footer"
-              width={0}
-              height={0}
-              sizes="100vw"
-            />
-          </div>
-        </footer>
+        <Footer settings={allSettings} />
       </body>
     </html>
   );
