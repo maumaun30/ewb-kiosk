@@ -27,12 +27,13 @@ export default function CatSlider({ categories }: Props) {
     <div className="w-[90%] mx-auto">
       <Swiper
         modules={[Navigation]}
-        spaceBetween={0}
-        slidesPerView={"auto"}
+        spaceBetween={8}
+        slidesPerView={6}
         navigation={{ prevEl, nextEl }}
-        wrapperClass="gap-2"
+        slidesOffsetAfter={6}
       >
-        <SwiperSlide className="basis-[calc(100%/6-((6-1)*8px)/6)] shrink-0 grow-1 h-full">
+        {/* <SwiperSlide className="basis-[calc(100%/6-((6-1)*8px)/6)] shrink-0 grow-1 h-full"> */}
+        <SwiperSlide className="h-full">
           <Link href={`/category/`} className="block h-full">
             <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-1 text-center text-white p-2 shadow-md ew-bg-purple">
               <Image
@@ -50,7 +51,7 @@ export default function CatSlider({ categories }: Props) {
         {categories.map((category, index) => (
           <SwiperSlide
             key={category.tid}
-            className="basis-[calc(100%/6-((6-1)*8px)/6)] shrink-0 grow-1 h-full"
+            className="h-full"
           >
             <Link href={`/category/${category.tid}`} className="block h-full">
               <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-1 text-center text-white p-2 shadow-md ew-bg-purple">
