@@ -211,7 +211,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
           }}>
           <div className="flex items-center justify-center gap-3 leading-none">
             <span
-              className="font-semibold text-[clamp(3rem,5vw,4.5rem)] text-(--purple) tabular-nums tracking-tight"
+              className="font-semibold text-[clamp(6rem,5vw,7.5rem)] text-(--purple) tabular-nums tracking-tight"
               suppressHydrationWarning
             >
               {timeString.split(":").map((part, i) => (
@@ -222,14 +222,14 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
               ))}
             </span>
             <span
-              className="font-semibold text-[clamp(3rem,5vw,4.5rem)] text-(--purple) opacity-80 tracking-tight uppercase"
+              className="font-semibold text-[clamp(6rem,5vw,7.5rem)] text-(--purple) opacity-80 tracking-tight uppercase"
               suppressHydrationWarning
             >
               {ampmString}
             </span>
           </div>
           <p
-            className="text-[clamp(0.85rem,1vw,1rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
+            className="text-[clamp(2.4rem,1vw,3.5rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
             suppressHydrationWarning
           >
             {dateString}
@@ -247,13 +247,13 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
             height={0}
             width={0}
             alt="EastWest official logo"
-            className="w-2xs h-auto"
+            className="w-96 h-auto"
             loading="eager"
           />
-          <span className="font-semibold text-[clamp(2.6rem,4vw,3.4rem)] text-(--purple) tracking-[0.06em]">
+          <span className="font-semibold text-[clamp(3.6rem,4vw,4.4rem)] text-(--purple) tracking-[0.06em]">
             Check out our promos!
           </span>
-          <p className="idle-shimmer font-medium text-[clamp(1.7rem,1.6vw,1.85rem)] tracking-[0.3em] uppercase mb-0">
+          <p className="idle-shimmer font-medium text-[clamp(2rem,1.6vw,2.35rem)] tracking-[0.3em] uppercase mb-0">
             Touch screen to begin
           </p>
         </div>
