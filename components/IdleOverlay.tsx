@@ -36,12 +36,52 @@ function toYouTubeEmbedUrl(url: string): string | null {
   }
 }
 
+function usePHTime() {
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const tick = () => setNow(new Date());
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const phTime = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Manila" }),
+  );
+
+  const hours = phTime.getHours();
+  const minutes = phTime.getMinutes();
+  const seconds = phTime.getSeconds();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const displayHours = (hours % 12 || 12).toString().padStart(2, "0");
+  const displayMinutes = minutes.toString().padStart(2, "0");
+  const displaySeconds = seconds.toString().padStart(2, "0");
+
+  const timeString = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+  const ampmString = ampm;
+
+  const dateString = phTime.toLocaleDateString("en-PH", {
+    timeZone: "Asia/Manila",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return { timeString, ampmString, dateString };
+}
+
 const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
   const [isIdle, setIsIdle] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const router = useRouter();
+  const { timeString, ampmString, dateString } = usePHTime();
+
+  const logoUrl =
+    settings?.navigation?.fields?.logo_url?.value ?? "/ew-logo_0.png";
 
   const idleTimeout =
     (settings?.video_overlay?.fields?.idle_timeout?.value ?? 30) * 1000;
@@ -117,6 +157,10 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
           0%   { background-position: -200% center; }
           100% { background-position:  200% center; }
         }
+        @keyframes clockPulse {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.4; }
+        }
         .idle-in  { animation: fadeIn  0.7s cubic-bezier(0.4,0,0.2,1) forwards; }
         .idle-out { animation: fadeOut 0.6s cubic-bezier(0.4,0,0.2,1) forwards; }
         .idle-shimmer {
@@ -126,6 +170,10 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
           background-clip: text;
           -webkit-text-fill-color: transparent;
           animation: shimmer 3.5s linear infinite;
+        }
+        .clock-colon {
+          animation: clockPulse 1s step-start infinite;
+          display: inline-block;
         }
       `}</style>
 
@@ -156,18 +204,50 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
           </div>
         )}
 
+        {/* PH Time */}
+        <div className="w-full absolute top-0 py-10 px-10 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, var(--green), transparent)",
+          }}>
+          <div className="flex items-center justify-center gap-3 leading-none">
+            <span
+              className="font-semibold text-[clamp(3rem,5vw,4.5rem)] text-(--purple) tabular-nums tracking-tight"
+              suppressHydrationWarning
+            >
+              {timeString.split(":").map((part, i) => (
+                <span key={i}>
+                  {i > 0 && <span className="clock-colon">:</span>}
+                  {part}
+                </span>
+              ))}
+            </span>
+            <span
+              className="font-semibold text-[clamp(3rem,5vw,4.5rem)] text-(--purple) opacity-80 tracking-tight uppercase"
+              suppressHydrationWarning
+            >
+              {ampmString}
+            </span>
+          </div>
+          <p
+            className="text-[clamp(0.85rem,1vw,1rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
+            suppressHydrationWarning
+          >
+            {dateString}
+          </p>
+        </div>
+
         <div
           className="relative z-10 flex flex-col items-center gap-4 w-full py-20 px-10 text-center"
           style={{
             background: "linear-gradient(to top, var(--green), transparent)",
           }}
         >
-          <Image
-            src="/ew-logo_0.png"
+          <img
+            src={logoUrl}
             height={0}
             width={0}
             alt="EastWest official logo"
-            className="w-150 h-auto"
+            className="w-2xs h-auto"
             loading="eager"
           />
           <span className="font-semibold text-[clamp(2.6rem,4vw,3.4rem)] text-(--purple) tracking-[0.06em]">

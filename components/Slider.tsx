@@ -52,7 +52,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                 />
               </div>
             )}
-            <div className="max-w-6xl py-20 px-5 mx-auto aspect-video flex flex-col justify-center">
+            <div className="max-w-6xl py-20 px-5 mx-auto aspect-16/7 flex flex-col justify-center">
               <div className="flex justify-end relative z-2">
                 <div className="w-1/2">
                   <div dangerouslySetInnerHTML={{ __html: slide.body ?? "" }} />
@@ -96,6 +96,9 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
       </div>
 
       <style>{`
+          .home-slide h2 {
+            color: var(--purple);
+          }
           .related.swiper-slide {
             height: auto !important;
             display: flex !important;

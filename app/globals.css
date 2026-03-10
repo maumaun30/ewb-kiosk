@@ -100,10 +100,6 @@
 }
 
 @layer utilities {
-  .home-slide h2 {
-    color: var(--purple);
-  }
-
   .promo-mechanics .table-fc-hl {
     margin: 32px 0;
   }

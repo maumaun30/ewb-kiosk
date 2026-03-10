@@ -2,7 +2,6 @@ import { Suspense } from "react";
 
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import Image from "next/image";
 import "./globals.css";
 
 import { NavigationProvider } from "@/context/NavigationContext";
@@ -12,6 +11,8 @@ import Footer from "@/components/Footer";
 import BackButton from "@/components/BackButton";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import IdleOverlay from "@/components/IdleOverlay";
+import BodyWrapper from "@/components/BodyWrapper";
+import MainWrapper from "@/components/MainWrapper";
 import { getSettings } from "@/lib/settings";
 
 const allSettings = await getSettings();
@@ -34,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>
+      <BodyWrapper fontVariable={poppins.variable}>
         <NavigationProvider>
           <Suspense>
             <LoadingOverlay />
@@ -42,10 +43,10 @@ export default function RootLayout({
           <IdleOverlay settings={allSettings} />
           <NavBar settings={allSettings} />
           <BackButton />
-          <main>{children}</main>
+          <MainWrapper>{children}</MainWrapper>
         </NavigationProvider>
         <Footer settings={allSettings} />
-      </body>
+      </BodyWrapper>
     </html>
   );
 }
