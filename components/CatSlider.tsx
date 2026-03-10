@@ -28,7 +28,7 @@ export default function CatSlider({ categories }: Props) {
       <Swiper
         modules={[Navigation]}
         spaceBetween={8}
-        slidesPerView={6}
+        slidesPerView={5}
         navigation={{ prevEl, nextEl }}
         slidesOffsetAfter={6}
       >
