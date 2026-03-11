@@ -80,6 +80,8 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
   const router = useRouter();
   const { timeString, ampmString, dateString } = usePHTime();
 
+  console.log(settings)
+
   const logoUrl =
     settings?.navigation?.fields?.logo_url?.value ?? "/ew-logo_0.png";
 
@@ -205,10 +207,12 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
         )}
 
         {/* PH Time */}
-        <div className="w-full absolute top-0 py-10 px-10 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
+        <div
+          className="w-full absolute top-0 py-10 px-10 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
           style={{
             background: "linear-gradient(to bottom, var(--green), transparent)",
-          }}>
+          }}
+        >
           <div className="flex items-center justify-center gap-3 leading-none">
             <span
               className="font-semibold text-[clamp(6rem,5vw,7.5rem)] text-(--purple) tabular-nums tracking-tight"
@@ -250,9 +254,11 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
             className="w-96 h-auto"
             loading="eager"
           />
-          <span className="font-semibold text-[clamp(3.6rem,4vw,4.4rem)] text-(--purple) tracking-[0.06em]">
-            Check out our promos!
-          </span>
+          {settings.video_overlay.fields.overlay_content.value && (
+            <span className="font-semibold text-[clamp(3.6rem,4vw,4.4rem)] text-(--purple) tracking-[0.06em]">
+              {settings.video_overlay.fields.overlay_content.value}
+            </span>
+          )}
           <p className="idle-shimmer font-medium text-[clamp(2rem,1.6vw,2.35rem)] tracking-[0.3em] uppercase mb-0">
             Touch screen to begin
           </p>

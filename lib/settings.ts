@@ -43,6 +43,7 @@ interface HomepageFields {
 interface VideoOverlaySection extends BaseSection<VideoOverlayFields> {}
 
 interface VideoOverlayFields {
+  overlay_content: TextField;
   video_type: SelectField;
   video_url: UrlField;
   idle_timeout: NumberField;
