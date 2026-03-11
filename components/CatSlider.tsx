@@ -28,17 +28,17 @@ export default function CatSlider({ categories }: Props) {
       <Swiper
         modules={[Navigation]}
         spaceBetween={8}
-        slidesPerView={5}
+        slidesPerView={6}
         navigation={{ prevEl, nextEl }}
         slidesOffsetAfter={6}
       >
         <SwiperSlide className="h-full">
           <Link href={`/category/`} className="block h-full">
-            <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-1 text-center text-white p-2 shadow-md ew-bg-purple">
+            <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
               <Image
                 src="/all-promos-icon.svg"
-                height={60}
-                width={60}
+                height={80}
+                width={80}
                 alt="All Promos"
                 className="aspect-square"
               />
@@ -53,11 +53,11 @@ export default function CatSlider({ categories }: Props) {
             className="h-full"
           >
             <Link href={`/category/${category.tid}`} className="block h-full">
-              <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-1 text-center text-white p-2 shadow-md ew-bg-purple">
+              <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.icon}`}
-                  height={60}
-                  width={60}
+                  height={80}
+                  width={80}
                   alt={category.name}
                   className="aspect-square"
                 />

@@ -213,7 +213,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
         >
           <div className="flex items-center justify-center gap-3 leading-none">
             <span
-              className="font-semibold text-[clamp(6rem,5vw,7.5rem)] text-(--purple) tabular-nums tracking-tight"
+              className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) tabular-nums tracking-tight"
               suppressHydrationWarning
             >
               {timeString.split(":").map((part, i) => (
@@ -224,14 +224,14 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
               ))}
             </span>
             <span
-              className="font-semibold text-[clamp(6rem,5vw,7.5rem)] text-(--purple) opacity-80 tracking-tight uppercase"
+              className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) opacity-80 tracking-tight uppercase"
               suppressHydrationWarning
             >
               {ampmString}
             </span>
           </div>
           <p
-            className="text-[clamp(2.4rem,1vw,3.5rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
+            className="text-[clamp(2rem,1vw,3rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
             suppressHydrationWarning
           >
             {dateString}
@@ -257,7 +257,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
               {settings.video_overlay.fields.overlay_content.value}
             </span>
           )}
-          <p className="idle-shimmer font-medium text-[clamp(2rem,1.6vw,2.35rem)] tracking-[0.3em] uppercase mb-0">
+          <p className="idle-shimmer font-medium text-[clamp(2rem,1vw,3rem)] tracking-[0.3em] uppercase mb-0">
             Touch screen to begin
           </p>
         </div>

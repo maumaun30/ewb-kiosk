@@ -43,12 +43,12 @@ export default async function Home() {
               Discover Promos Made for You
             </h3>
             <div className="flex justify-center gap-0 flex-wrap">
-              <Link href={`/category/`} className="basis-1/6 grow-0 p-2 flex">
-                <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-5 shadow-md ew-bg-purple">
+              <Link href={`/category/`} className="basis-1/6 aspect-square grow-0 p-2 flex">
+                <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
                   <Image
                     src="/all-promos-icon.svg"
-                    height={60}
-                    width={60}
+                    height={80}
+                    width={80}
                     alt="All Promos"
                     className="aspect-square"
                   />
@@ -60,16 +60,16 @@ export default async function Home() {
                 <Link
                   key={index}
                   href={`/category/${category.tid}`}
-                  className="basis-1/6 grow-0 p-2 flex"
+                  className="basis-1/6 aspect-square grow-0 p-2 flex"
                 >
                   <div
-                    className={`w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-5 shadow-md
+                    className={`w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md
         ${index % 2 === 0 ? "ew-bg-pink" : "ew-bg-purple"}`}
                   >
                     <Image
                       src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.icon}`}
-                      height={60}
-                      width={60}
+                      height={80}
+                      width={80}
                       alt={category.name}
                       className="aspect-square"
                     />
