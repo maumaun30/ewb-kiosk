@@ -17,24 +17,34 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 
 interface Props {
   categories: Category[];
+  activeCategoryId?: string;
 }
 
-export default function CatSlider({ categories }: Props) {
+export default function CatSlider({ categories, activeCategoryId }: Props) {
   const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
+
+  const isAllActive = !activeCategoryId;
+
+  // +1 to account for the "All Promos" slide at index 0
+  const activeIndex = activeCategoryId
+    ? categories.findIndex((c) => String(c.tid) === activeCategoryId) + 1
+    : 0;
 
   return (
     <div className="w-[90%] mx-auto">
       <Swiper
         modules={[Navigation]}
         spaceBetween={8}
-        slidesPerView={6}
+        slidesPerView={5}
+        initialSlide={activeIndex}
         navigation={{ prevEl, nextEl }}
-        slidesOffsetAfter={6}
       >
         <SwiperSlide className="h-full">
           <Link href={`/category/`} className="block h-full">
-            <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
+            <div
+              className={`aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 ew-bg-purple`}
+            >
               <Image
                 src="/all-promos-icon.svg"
                 height={80}
@@ -42,30 +52,33 @@ export default function CatSlider({ categories }: Props) {
                 alt="All Promos"
                 className="aspect-square"
               />
-              <h3 className="text-md m-0">All Promos</h3>
+              <h3 className="text-md m-0 leading-tight">All Promos</h3>
             </div>
           </Link>
         </SwiperSlide>
 
-        {categories.map((category, index) => (
-          <SwiperSlide
-            key={category.tid}
-            className="h-full"
-          >
-            <Link href={`/category/${category.tid}`} className="block h-full">
-              <div className="aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.icon}`}
-                  height={80}
-                  width={80}
-                  alt={category.name}
-                  className="aspect-square"
-                />
-                <h3 className="text-md m-0">{category.name}</h3>
-              </div>
-            </Link>
-          </SwiperSlide>
-        ))}
+        {categories.map((category) => {
+          const isActive = String(category.tid) === activeCategoryId;
+
+          return (
+            <SwiperSlide key={category.tid} className="h-full">
+              <Link href={`/category/${category.tid}`} className="block h-full">
+                <div
+                  className={`aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 ew-bg-purple`}
+                >
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.icon}`}
+                    height={80}
+                    width={80}
+                    alt={category.name}
+                    className="aspect-square"
+                  />
+                  <h3 className="text-md m-0 leading-tight">{category.name}</h3>
+                </div>
+              </Link>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <button
         ref={setPrevEl}

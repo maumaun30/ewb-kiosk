@@ -4,8 +4,12 @@ import { getCategories } from "@/lib/categories";
 
 import CatSlider from "./CatSlider";
 
-export default async function CatSliderWrapper() {
+interface Props {
+  activeCategoryId?: string;
+}
+
+export default async function CatSliderWrapper({ activeCategoryId }: Props) {
   const categories: Category[] = await getCategories();
 
-  return <CatSlider categories={categories} />;
+  return <CatSlider categories={categories} activeCategoryId={activeCategoryId} />;
 }

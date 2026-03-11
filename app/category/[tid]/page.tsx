@@ -39,7 +39,7 @@ export default async function Category({
         </div> */}
         <div className="absolute bottom-0 left-0 w-full translate-y-1/2 z-1">
           <div className="max-w-6xl mx-auto px-5 relative">
-            <CatSliderWrapper />
+            <CatSliderWrapper activeCategoryId={tid} />
           </div>
         </div>
       </section>
