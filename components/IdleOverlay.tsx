@@ -80,8 +80,6 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
   const router = useRouter();
   const { timeString, ampmString, dateString } = usePHTime();
 
-  console.log(settings)
-
   const logoUrl =
     settings?.navigation?.fields?.logo_url?.value ?? "/ew-logo_0.png";
 
