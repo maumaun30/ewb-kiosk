@@ -43,7 +43,7 @@ export default async function Home() {
               Discover Promos Made for You
             </h3>
             <div className="flex justify-center gap-0 flex-wrap">
-              <Link href={`/category/`} className="basis-1/6 aspect-square grow-0 p-2 flex">
+              <Link href={`/category/`} className="basis-1/6 grow-0 p-2 flex">
                 <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
                   <Image
                     src="/all-promos-icon.svg"
@@ -52,7 +52,7 @@ export default async function Home() {
                     alt="All Promos"
                     className="aspect-square"
                   />
-                  <h3 className="text-md text-white mb-0">All Promos</h3>
+                  <h3 className="text-md text-white mb-0 leading-tight">All Promos</h3>
                 </div>
               </Link>
 
@@ -60,7 +60,7 @@ export default async function Home() {
                 <Link
                   key={index}
                   href={`/category/${category.tid}`}
-                  className="basis-1/6 aspect-square grow-0 p-2 flex"
+                  className="basis-1/6 grow-0 p-2 flex"
                 >
                   <div
                     className={`w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md
@@ -73,7 +73,7 @@ export default async function Home() {
                       alt={category.name}
                       className="aspect-square"
                     />
-                    <h3 className="text-md text-white mb-0">{category.name}</h3>
+                    <h3 className="text-md text-white mb-0 leading-tight">{category.name}</h3>
                   </div>
                 </Link>
               ))}
