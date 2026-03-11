@@ -1,3 +1,4 @@
+// components/BackButton.tsx
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -7,18 +8,14 @@ import { useNavigation } from "@/context/NavigationContext";
 export default function BackButton() {
   const pathname = usePathname();
   const router = useRouter();
-  const { getPreviousPath } = useNavigation();
+  const { goBack } = useNavigation();
 
   if (pathname === "/") return null;
 
   const handleClick = () => {
-    const previousPath = getPreviousPath();
     document.dispatchEvent(new CustomEvent("navigation-start"));
-    if (previousPath) {
-      router.push(previousPath);
-    } else {
-      router.push("/"); // fallback
-    }
+    const previousPath = goBack(); // pops current, returns previous
+    router.push(previousPath ?? "/");
   };
 
   return (

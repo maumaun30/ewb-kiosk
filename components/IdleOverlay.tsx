@@ -108,6 +108,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
   }, []);
 
   const resetTimer = useCallback(() => {
+    if (isIdle) return;
     clearTimers();
     idleTimerRef.current = setTimeout(() => {
       setIsIdle(true);
@@ -115,7 +116,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
         router.push("/");
       }, resetTimeout);
     }, idleTimeout);
-  }, [clearTimers, router, idleTimeout, resetTimeout]);
+  }, [clearTimers, router, idleTimeout, resetTimeout, isIdle]);
 
   useEffect(() => {
     const events = [
@@ -137,6 +138,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
 
   const handleResume = () => {
     setIsLeaving(true);
+    clearTimers();
     setTimeout(() => {
       setIsIdle(false);
       setIsLeaving(false);
