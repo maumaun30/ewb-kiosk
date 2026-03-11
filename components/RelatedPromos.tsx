@@ -66,7 +66,7 @@ export default function RelatedPromos({
         </div>
         <Swiper
           modules={[Navigation, Pagination]}
-          slidesPerView={1}
+          slidesPerView={3}
           spaceBetween={24}
           navigation={{ prevEl, nextEl }}
           pagination={{
@@ -74,10 +74,6 @@ export default function RelatedPromos({
             el: ".related-pagination",
             bulletClass: "related-bullet",
             bulletActiveClass: "related-bullet-active",
-          }}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
           }}
           className="pb-12"
           wrapperClass="pb-5"
