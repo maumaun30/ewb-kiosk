@@ -15,6 +15,7 @@ export interface Data {
   homepage: HomepageSection;
   video_overlay: VideoOverlaySection;
   footer: FooterSection;
+  category_page: CategorySection;
 }
 
 interface BaseSection<T> {
@@ -58,6 +59,16 @@ interface FooterSection extends BaseSection<FooterFields> {}
 
 interface FooterFields {
   footer_logo_url: MediaImageField;
+}
+
+/* ---------- Footer ---------- */
+
+interface CategorySection extends BaseSection<CategoryFields> {}
+
+interface CategoryFields {
+  all_promos_banner: MediaImageField;
+  all_promos_icon: MediaImageField;
+  overlay_content: all_promos_content;
 }
 
 /* ---------- Field Types ---------- */

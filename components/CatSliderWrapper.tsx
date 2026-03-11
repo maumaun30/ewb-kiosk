@@ -1,3 +1,4 @@
+import { getSettings } from "@/lib/settings";
 import type { Category } from "@/lib/types";
 
 import { getCategories } from "@/lib/categories";
@@ -9,7 +10,9 @@ interface Props {
 }
 
 export default async function CatSliderWrapper({ activeCategoryId }: Props) {
+  const settings = await getSettings();
   const categories: Category[] = await getCategories();
 
-  return <CatSlider categories={categories} activeCategoryId={activeCategoryId} />;
+
+  return <CatSlider categories={categories} activeCategoryId={activeCategoryId} settings={settings} />;
 }

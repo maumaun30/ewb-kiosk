@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 import type { Category } from "@/lib/types";
+import type { Data } from "@/lib/settings";
+import { getSettings } from "@/lib/settings";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -18,18 +20,27 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 interface Props {
   categories: Category[];
   activeCategoryId?: string;
+  settings: Data[];
 }
 
-export default function CatSlider({ categories, activeCategoryId }: Props) {
+export default function CatSlider({
+  categories,
+  activeCategoryId,
+  settings,
+}: Props) {
   const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
-  const isAllActive = !activeCategoryId;
+  // const isAllActive = !activeCategoryId;
 
   // +1 to account for the "All Promos" slide at index 0
   const activeIndex = activeCategoryId
     ? categories.findIndex((c) => String(c.tid) === activeCategoryId) + 1
     : 0;
+
+  const icon =
+    settings?.category_page?.fields?.all_promos_icon.value ??
+    "/all-promos-icon.webp";
 
   return (
     <div className="w-[90%] mx-auto">
@@ -46,11 +57,11 @@ export default function CatSlider({ categories, activeCategoryId }: Props) {
               className={`aspect-square rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 ew-bg-purple`}
             >
               <Image
-                src="/all-promos-icon.svg"
+                src={icon}
                 height={80}
                 width={80}
                 alt="All Promos"
-                className="aspect-square"
+                className="aspect-square object-contain"
               />
               <h3 className="text-md m-0 leading-tight">All Promos</h3>
             </div>
@@ -71,7 +82,7 @@ export default function CatSlider({ categories, activeCategoryId }: Props) {
                     height={80}
                     width={80}
                     alt={category.name}
-                    className="aspect-square"
+                    className="aspect-square object-contain"
                   />
                   <h3 className="text-md m-0 leading-tight">{category.name}</h3>
                 </div>

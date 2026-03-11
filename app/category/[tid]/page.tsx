@@ -23,21 +23,27 @@ export default async function Category({
 
   return (
     <>
-      <section className="aspect-16/7 relative mb-25">
+      <section
+        className={`aspect-16/7 relative mb-25 ${!category.banner ? "bg-(--green)" : ""}`}
+      >
         <div className="w-full absolute inset-0 h-full z-1 pointer-events-none">
-          <Image
-            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.banner}`}
-            height={0}
-            width={0}
-            alt={category.name}
-            sizes="100vw"
-            className="w-full h-full object-cover pointer-events-none"
-          />
+          {category.banner && (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.banner}`}
+              height={0}
+              width={0}
+              alt={category.name}
+              sizes="100vw"
+              className="w-full h-full object-cover pointer-events-none"
+            />
+          )}
         </div>
-        {/* <div className="max-w-6xl mx-auto py-20 px-5 h-full relative z-2">
-          CONTENT HERE
-        </div> */}
-        <div className="absolute bottom-0 left-0 w-full translate-y-1/2 z-1">
+        {!category.banner && (
+          <div className="max-w-6xl mx-auto py-20 px-5 h-full flex justify-center items-center text-center relative z-2">
+            <h1 className="text-(--purple)">{category.name}</h1>
+          </div>
+        )}
+        <div className="absolute bottom-0 left-0 w-full translate-y-1/2 z-3">
           <div className="max-w-6xl mx-auto px-5 relative">
             <CatSliderWrapper activeCategoryId={tid} />
           </div>
