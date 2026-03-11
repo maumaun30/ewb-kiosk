@@ -205,38 +205,41 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
         )}
 
         {/* PH Time */}
-        <div
-          className="w-full absolute top-0 py-10 px-10 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
-          style={{
-            background: "linear-gradient(to bottom, var(--green), transparent)",
-          }}
-        >
-          <div className="flex items-center justify-center gap-3 leading-none">
-            <span
-              className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) tabular-nums tracking-tight"
-              suppressHydrationWarning
-            >
-              {timeString.split(":").map((part, i) => (
-                <span key={i}>
-                  {i > 0 && <span className="clock-colon">:</span>}
-                  {part}
-                </span>
-              ))}
-            </span>
-            <span
-              className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) opacity-80 tracking-tight uppercase"
-              suppressHydrationWarning
-            >
-              {ampmString}
-            </span>
-          </div>
-          <p
-            className="text-[clamp(2rem,1vw,3rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
-            suppressHydrationWarning
+        {settings?.video_overlay?.fields?.enable_clockdate?.value === true && (
+          <div
+            className="w-full absolute top-0 py-10 px-10 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(to bottom, var(--green), transparent)",
+            }}
           >
-            {dateString}
-          </p>
-        </div>
+            <div className="flex items-center justify-center gap-3 leading-none">
+              <span
+                className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) tabular-nums tracking-tight"
+                suppressHydrationWarning
+              >
+                {timeString.split(":").map((part, i) => (
+                  <span key={i}>
+                    {i > 0 && <span className="clock-colon">:</span>}
+                    {part}
+                  </span>
+                ))}
+              </span>
+              <span
+                className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) opacity-80 tracking-tight uppercase"
+                suppressHydrationWarning
+              >
+                {ampmString}
+              </span>
+            </div>
+            <p
+              className="text-[clamp(2rem,1vw,3rem)] text-(--purple) opacity-80 font-medium tracking-[0.15em] uppercase mt-1"
+              suppressHydrationWarning
+            >
+              {dateString}
+            </p>
+          </div>
+        )}
 
         <div
           className="relative z-10 flex flex-col items-center gap-4 w-full py-20 px-10 text-center"
@@ -252,7 +255,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
             className="w-96 h-auto"
             loading="eager"
           />
-          {settings.video_overlay.fields.overlay_content.value && (
+          {settings?.video_overlay?.fields?.overlay_content?.value && (
             <span className="font-semibold text-[clamp(3.6rem,4vw,4.4rem)] text-(--purple) tracking-[0.06em]">
               {settings.video_overlay.fields.overlay_content.value}
             </span>

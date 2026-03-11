@@ -43,6 +43,7 @@ interface HomepageFields {
 interface VideoOverlaySection extends BaseSection<VideoOverlayFields> {}
 
 interface VideoOverlayFields {
+  enable_clockdate: BooleanField;
   overlay_content: TextField;
   video_type: SelectField;
   video_url: UrlField;
@@ -90,6 +91,10 @@ interface UrlField extends BaseField<string> {
 
 interface NumberField extends BaseField<number> {
   type: "number";
+}
+
+interface BooleanField extends BaseField<boolean> {
+  type: "boolean";
 }
 
 /* ---------- Fetch Settings ---------- */
