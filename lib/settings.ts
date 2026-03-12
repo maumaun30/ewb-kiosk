@@ -68,7 +68,7 @@ interface CategorySection extends BaseSection<CategoryFields> {}
 interface CategoryFields {
   all_promos_banner: MediaImageField;
   all_promos_icon: MediaImageField;
-  overlay_content: all_promos_content;
+  all_promos_content: WysiwygField;
 }
 
 /* ---------- Field Types ---------- */

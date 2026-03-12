@@ -17,7 +17,7 @@ export default async function Home() {
       <header className="flex-none">
         <Slider slides={allSlides} />
       </header>
-      <section className="grow ew-bg-purple py-20 px-5 flex flex-col justify-center">
+      <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto text-center">
           <div>
             <h2 className="ew-text-green mb-5">
@@ -43,7 +43,7 @@ export default async function Home() {
               Discover Promos Made for You
             </h3>
             <div className="flex justify-center gap-0 flex-wrap">
-              <Link href={`/category/`} className="basis-1/6 grow-0 p-2 flex">
+              <Link href={`/category/`} className="basis-1/5 grow-0 p-2 flex">
                 <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
                   <Image
                     src="/all-promos-icon.svg"
@@ -60,7 +60,7 @@ export default async function Home() {
                 <Link
                   key={index}
                   href={`/category/${category.tid}`}
-                  className="basis-1/6 grow-0 p-2 flex"
+                  className="basis-1/5 grow-0 p-2 flex"
                 >
                   <div
                     className={`w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md

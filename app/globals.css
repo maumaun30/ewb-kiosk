@@ -71,6 +71,15 @@
     padding: 24px;
     text-align: center;
   }
+
+  /* Scroll bar */
+  * {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/WebView */
+  }
 }
 
 @layer components {

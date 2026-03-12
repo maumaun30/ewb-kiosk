@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import type { Category } from "@/lib/types";
 import type { Data } from "@/lib/settings";
-import { getSettings } from "@/lib/settings";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -20,7 +19,7 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 interface Props {
   categories: Category[];
   activeCategoryId?: string;
-  settings: Data[];
+  settings: Data;
 }
 
 export default function CatSlider({
