@@ -20,7 +20,7 @@ export default async function Home() {
       <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto text-center">
           <div>
-            <h2 className="ew-text-green mb-5">
+            <h2 className="ew-text-green mb-5 max-w-150 mx-auto">
               {settings.homepage.fields.promo_title.value ||
                 "EastWest Card Promos"}
             </h2>
@@ -39,8 +39,9 @@ export default async function Home() {
             />
           </div>
           <div className="mt-20">
-            <h3 className="text-3xl text-white mb-10">
-              Discover Promos Made for You
+            <h3 className="text-3xl text-white mb-10 max-w-150 mx-auto">
+              {settings.homepage.fields.promo_subtitle.value ||
+                "Discover Promos Made for You"}
             </h3>
             <div className="flex justify-center gap-0 flex-wrap">
               <Link href={`/category/`} className="basis-1/5 grow-0 p-2 flex">
@@ -52,7 +53,9 @@ export default async function Home() {
                     alt="All Promos"
                     className="aspect-square"
                   />
-                  <h3 className="text-md text-white mb-0 leading-tight">All Promos</h3>
+                  <h3 className="text-md text-white mb-0 leading-tight">
+                    All Promos
+                  </h3>
                 </div>
               </Link>
 
@@ -73,7 +76,9 @@ export default async function Home() {
                       alt={category.name}
                       className="aspect-square"
                     />
-                    <h3 className="text-md text-white mb-0 leading-tight">{category.name}</h3>
+                    <h3 className="text-md text-white mb-0 leading-tight">
+                      {category.name}
+                    </h3>
                   </div>
                 </Link>
               ))}

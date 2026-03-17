@@ -38,6 +38,7 @@ type HomepageSection = BaseSection<HomepageFields>;
 interface HomepageFields {
   promo_title: TextField;
   promo_content: WysiwygField;
+  promo_subtitle: TextField;
 }
 
 /* ---------- Video Overlay ---------- */
