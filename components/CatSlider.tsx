@@ -68,7 +68,7 @@ export default function CatSlider({
         </SwiperSlide>
 
         {categories.map((category) => {
-          const isActive = String(category.tid) === activeCategoryId;
+          // const isActive = String(category.tid) === activeCategoryId;
 
           return (
             <SwiperSlide key={category.tid} className="h-full">

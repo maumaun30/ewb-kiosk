@@ -58,7 +58,7 @@ export default async function Home() {
 
               {categories.map((category, index) => (
                 <Link
-                  key={index}
+                  key={category.tid}
                   href={`/category/${category.tid}`}
                   className="basis-1/5 grow-0 p-2 flex"
                 >

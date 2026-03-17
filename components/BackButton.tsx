@@ -10,7 +10,9 @@ export default function BackButton() {
   const router = useRouter();
   const { goBack } = useNavigation();
 
-  if (pathname === "/") return null;
+  if (pathname === "/") {
+    return null;
+  }
 
   const handleClick = () => {
     document.dispatchEvent(new CustomEvent("navigation-start"));

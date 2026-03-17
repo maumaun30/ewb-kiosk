@@ -20,7 +20,7 @@ export const getCategories = cache(async (): Promise<Category[]> => {
     );
   }
 
-  return res.json();
+  return res.json() as Promise<Category[]>;
 });
 
 export const getCategory = cache(async (tid: string): Promise<Category> => {
@@ -40,6 +40,6 @@ export const getCategory = cache(async (tid: string): Promise<Category> => {
     );
   }
 
-  const data = await res.json();
+  const data = (await res.json()) as Category[];
   return data[0];
 });

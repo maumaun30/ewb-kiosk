@@ -20,5 +20,5 @@ export const getCardTypes = cache(async (): Promise<CardType[]> => {
     );
   }
 
-  return res.json();
+  return res.json() as Promise<CardType[]>;
 });

@@ -30,6 +30,7 @@ export interface Promo {
 }
 
 export interface Slide {
+  id: string;
   body: string;
   background_image?: string;
   field_cta_link?: string;

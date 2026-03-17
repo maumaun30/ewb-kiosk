@@ -285,8 +285,9 @@ export default function PromoFilter({
             const showEllipsisAfter =
               page === currentPage + 2 && currentPage + 2 < totalPages;
 
-            if (!showPage && !showEllipsisBefore && !showEllipsisAfter)
+            if (!showPage && !showEllipsisBefore && !showEllipsisAfter) {
               return null;
+            }
             if (showEllipsisBefore || showEllipsisAfter) {
               return (
                 <span key={`ellipsis-${page}`} className="px-2 text-black">

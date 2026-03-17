@@ -27,7 +27,9 @@ function toYouTubeEmbedUrl(url: string): string | null {
       }
     }
 
-    if (!videoId) return null;
+    if (!videoId) {
+      return null;
+    }
     videoId = videoId.split("?")[0].split("&")[0].split("/")[0];
 
     return `https://www.youtube.com/embed/${videoId}`;
@@ -103,12 +105,18 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
   const hasVideo = !!videoType && !!resolvedEmbedUrl;
 
   const clearTimers = useCallback(() => {
-    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current);
+    }
+    if (resetTimerRef.current) {
+      clearTimeout(resetTimerRef.current);
+    }
   }, []);
 
   const resetTimer = useCallback(() => {
-    if (isIdle) return;
+    if (isIdle) {
+      return;
+    }
     clearTimers();
     idleTimerRef.current = setTimeout(() => {
       setIsIdle(true);
@@ -146,7 +154,9 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
     }, 600);
   };
 
-  if (!isIdle) return null;
+  if (!isIdle) {
+    return null;
+  }
 
   const videoId = resolvedEmbedUrl?.split("/embed/")[1];
 
@@ -180,7 +190,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
       `}</style>
 
       <div
-        className={`${isLeaving ? "idle-out" : "idle-in"} fixed inset-0 z-[9999] cursor-pointer select-none overflow-hidden flex items-end justify-center ew-bg-purple`}
+        className={`${isLeaving ? "idle-out" : "idle-in"} fixed inset-0 z-9999 cursor-pointer select-none overflow-hidden flex items-end justify-center ew-bg-purple`}
         onClick={handleResume}
       >
         {hasVideo && (
@@ -220,10 +230,10 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
                 className="font-semibold text-[clamp(5rem,5vw,7rem)] text-(--purple) tabular-nums tracking-tight"
                 suppressHydrationWarning
               >
-                {timeString.split(":").map((part, i) => (
-                  <span key={i}>
+                {(["hours", "minutes", "seconds"] as const).map((label, i) => (
+                  <span key={label}>
                     {i > 0 && <span className="clock-colon">:</span>}
-                    {part}
+                    {timeString.split(":")[i]}
                   </span>
                 ))}
               </span>
@@ -249,7 +259,7 @@ const IdleOverlay: React.FC<SettingsProps> = ({ settings }) => {
             background: "linear-gradient(to top, var(--green), transparent)",
           }}
         >
-          <img
+          <Image
             src={logoUrl}
             height={0}
             width={0}
