@@ -40,7 +40,6 @@ export const getPromo = cache(async (nid: string): Promise<Promo> => {
     );
   }
 
-  const data = await res.json() as Promise<Promo[]>;
-
-  return data[0] as Promise<Promo[]>;
+  const data = (await res.json()) as Promo[];
+  return data[0];
 });

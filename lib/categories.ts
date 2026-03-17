@@ -40,6 +40,6 @@ export const getCategory = cache(async (tid: string): Promise<Category> => {
     );
   }
 
-  const data = (await res.json()) as Promise<Category>;
-  return data[0] as Promise<Category>;
+  const data = (await res.json()) as Category[];
+  return data[0];
 });

@@ -25,7 +25,7 @@ interface BaseSection<T> {
 
 /* ---------- Navigation ---------- */
 
-type NavigationSection = BaseSection<NavigationFields>
+type NavigationSection = BaseSection<NavigationFields>;
 
 interface NavigationFields {
   logo_url: MediaImageField;
@@ -33,7 +33,7 @@ interface NavigationFields {
 
 /* ---------- Homepage ---------- */
 
-type HomepageSection = BaseSection<HomepageFields>
+type HomepageSection = BaseSection<HomepageFields>;
 
 interface HomepageFields {
   promo_title: TextField;
@@ -42,7 +42,7 @@ interface HomepageFields {
 
 /* ---------- Video Overlay ---------- */
 
-type VideoOverlaySection = BaseSection<VideoOverlayFields>
+type VideoOverlaySection = BaseSection<VideoOverlayFields>;
 
 interface VideoOverlayFields {
   enable_clockdate: BooleanField;
@@ -55,7 +55,7 @@ interface VideoOverlayFields {
 
 /* ---------- Footer ---------- */
 
-type FooterSection = BaseSection<FooterFields>
+type FooterSection = BaseSection<FooterFields>;
 
 interface FooterFields {
   footer_logo_url: MediaImageField;
@@ -63,7 +63,7 @@ interface FooterFields {
 
 /* ---------- Footer ---------- */
 
-type CategorySection = BaseSection<CategoryFields>
+type CategorySection = BaseSection<CategoryFields>;
 
 interface CategoryFields {
   all_promos_banner: MediaImageField;
@@ -128,7 +128,6 @@ export const getSettings = cache(async (): Promise<Data> => {
     );
   }
 
-  const json: Setting = await res.json() as Promise<Data>;
-
+  const json = (await res.json()) as Setting;
   return json.data;
 });
