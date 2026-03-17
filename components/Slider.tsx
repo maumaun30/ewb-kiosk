@@ -43,7 +43,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
         }}
       >
         {slides.map((slide) => (
-          <SwiperSlide key={slide.id} className="relative home-slide">
+          <SwiperSlide key={slide.id} className="relative home-slide aspect-16/7">
             {slide.background_image && (
               <div className="absolute inset-0 h-full w-full z-1">
                 <Image
@@ -55,7 +55,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
                 />
               </div>
             )}
-            <div className="max-w-6xl py-20 px-5 mx-auto aspect-16/7 flex flex-col justify-center">
+            <div className="max-w-6xl py-20 px-5 mx-auto flex flex-col justify-center">
               <div className="flex justify-end relative z-2">
                 <div className="w-1/2">
                   <div dangerouslySetInnerHTML={{ __html: slide.body ?? "" }} />
