@@ -17,7 +17,9 @@ function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
   );
 
   return all.filter((promo) => {
-    if (promo.nid === current.nid) return false;
+    if (promo.nid === current.nid) {
+      return false;
+    }
 
     const matchesCategory = promo.field_categories_reference?.some((c) =>
       categoryTids.has(c.tid),
@@ -29,7 +31,7 @@ function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
       cardTypeTids.has(ct.tid),
     );
 
-    return matchesCategory || matchesLocation || matchesCardType;
+    return (matchesCategory ?? matchesLocation) ?? matchesCardType;
   });
 }
 
@@ -81,9 +83,9 @@ export default async function PromoPage({
               />
 
               <div className="mt-10 flex flex-wrap gap-2 items-center">
-                {tags.map((tag, index) => (
+                {tags.map((tag) => (
                   <div
-                    key={index}
+                    key={tag.tid}
                     className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[12px] text-nowrap`}
                   >
                     {tag.name}

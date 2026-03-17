@@ -20,5 +20,5 @@ export const getSlides = cache(async (): Promise<Slide[]> => {
     );
   }
 
-  return res.json();
+  return res.json() as Promise<Slide[]>;
 });

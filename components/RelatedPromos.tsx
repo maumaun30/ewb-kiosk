@@ -28,7 +28,9 @@ function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
 
   return all
     .filter((promo) => {
-      if (promo.nid === current.nid) return false;
+      if (promo.nid === current.nid) {
+        return false;
+      }
 
       const matchesCategory = promo.field_categories_reference?.some((c) =>
         categoryTids.has(c.tid),
@@ -40,7 +42,7 @@ function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
         cardTypeTids.has(ct.tid),
       );
 
-      return matchesCategory || matchesLocation || matchesCardType;
+      return matchesCategory ?? matchesLocation ?? matchesCardType;
     })
     .slice(0, 9);
 }
@@ -56,7 +58,9 @@ export default function RelatedPromos({
   const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
-  if (relatedPromos.length === 0) return null;
+  if (relatedPromos.length === 0) {
+    return null;
+  }
 
   return (
     <section>

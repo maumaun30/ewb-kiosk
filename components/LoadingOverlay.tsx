@@ -1,19 +1,25 @@
 // components/LoadingOverlay.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export default function LoadingOverlay() {
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    setLoading(false); // Hide overlay when navigation completes
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    // Navigation completed — hide overlay
+    const id = setTimeout(() => setLoading(false), 0);
+    return () => clearTimeout(id);
   }, [pathname, searchParams]);
 
-  // Expose a way to trigger loading from anywhere
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest("a");
@@ -32,7 +38,9 @@ export default function LoadingOverlay() {
       document.removeEventListener("navigation-start", handleNavStart);
   }, []);
 
-  if (!loading) return null;
+  if (!loading) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-9999 flex items-center justify-center bg-white/25 backdrop-blur-sm">

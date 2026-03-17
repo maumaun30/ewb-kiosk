@@ -20,5 +20,5 @@ export const getLocations = cache(async (): Promise<Location[]> => {
     );
   }
 
-  return res.json();
+  return res.json() as Promise<Location[]>;
 });

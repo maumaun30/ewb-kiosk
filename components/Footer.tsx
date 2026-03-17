@@ -1,4 +1,5 @@
 import type { Data } from "@/lib/settings";
+import Image from "next/image";
 
 interface SettingsProps {
   settings: Data;
@@ -10,7 +11,7 @@ const Footer: React.FC<SettingsProps> = ({ settings }) => {
   return (
     <footer>
       <div className="max-w-6xl mx-auto">
-        <img
+        <Image
           src={footerImg}
           className="w-full"
           alt="EastWest footer"

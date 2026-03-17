@@ -20,7 +20,7 @@ export const getPromos = cache(async (): Promise<Promo[]> => {
     );
   }
 
-  return res.json();
+  return res.json() as Promise<Promo[]>;
 });
 
 export const getPromo = cache(async (nid: string): Promise<Promo> => {
@@ -40,7 +40,7 @@ export const getPromo = cache(async (nid: string): Promise<Promo> => {
     );
   }
 
-  const data = await res.json();
+  const data = await res.json() as Promise<Promo[]>;
 
-  return data[0];
+  return data[0] as Promise<Promo[]>;
 });

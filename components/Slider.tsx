@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Slide } from "@/lib/types";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
@@ -30,7 +31,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
         spaceBetween={50}
         slidesPerView={1}
         navigation={{ prevEl, nextEl }}
-        loop={true}
+        loop
         autoplay={{
           delay: 7000,
         }}
@@ -41,14 +42,16 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
           bulletActiveClass: "related-bullet-active",
         }}
       >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index} className="relative home-slide">
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id} className="relative home-slide">
             {slide.background_image && (
               <div className="absolute inset-0 h-full w-full z-1">
-                <img
+                <Image
                   src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${slide.background_image}`}
                   alt=""
                   className="h-full w-full object-cover"
+                  height={0}
+                  width={0}
                 />
               </div>
             )}

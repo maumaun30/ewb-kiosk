@@ -65,7 +65,7 @@ export default function PromoCard({ promo }: PromoCardProps) {
                   .trim()
                   .split(/\s+/);
                 return words.length > 20
-                  ? words.slice(0, 20).join(" ") + "…"
+                  ? `${words.slice(0, 20).join(" ")}…`
                   : words.join(" ");
               })(),
             }}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { House } from "lucide-react";
 import type { Data } from "@/lib/settings";
 
@@ -17,7 +17,7 @@ const NavBar: React.FC<SettingsProps> = ({ settings }) => {
         <div className="flex items-center justify-between">
           <div>
             <Link href="/">
-              <img
+              <Image
                 src={logoUrl}
                 height={0}
                 width={0}
