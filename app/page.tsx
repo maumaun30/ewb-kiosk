@@ -20,29 +20,26 @@ export default async function Home() {
       <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto text-center">
           <div>
-            <h2 className="ew-text-green mb-5 max-w-150 mx-auto">
-              {settings.homepage.fields.promo_title.value ||
-                "EastWest Card Promos"}
-            </h2>
-            {/* <p className="text-white">
-              Make every swipe count with your EastWest card.
-            </p>
-            <p className="text-white max-w-150 mx-auto">
-              Discover exciting deals and exclusive perks from our latest
-              credit, debit, and prepaid card promotions.
-            </p> */}
-            <div
-              className="text-white max-w-150 mx-auto"
-              dangerouslySetInnerHTML={{
-                __html: settings.homepage.fields.promo_content.value ?? "",
-              }}
-            />
+            {settings.homepage.fields.promo_title.value && (
+              <h2 className="ew-text-green mb-5 max-w-150 mx-auto">
+                {settings.homepage.fields.promo_title.value}
+              </h2>
+            )}
+            {settings.homepage.fields.promo_content.value ?? (
+              <div
+                className="text-white max-w-150 mx-auto"
+                dangerouslySetInnerHTML={{
+                  __html: settings.homepage.fields.promo_content.value,
+                }}
+              />
+            )}
           </div>
-          <div className="mt-20">
-            <h3 className="text-3xl text-white mb-10 max-w-150 mx-auto">
-              {settings.homepage.fields.promo_subtitle.value ||
-                "Discover Promos Made for You"}
-            </h3>
+          <div className="mt-10">
+            {settings.homepage.fields.promo_subtitle.value && (
+              <h3 className="text-3xl text-white mb-10 max-w-150 mx-auto">
+                {settings.homepage.fields.promo_subtitle.value}
+              </h3>
+            )}
             <div className="flex justify-center gap-0 flex-wrap">
               <Link href={`/category/`} className="basis-1/5 grow-0 p-2 flex">
                 <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
