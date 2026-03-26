@@ -20,7 +20,7 @@ export default async function Home() {
       <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center relative">
         <div className="absolute inset-0 h-full w-full z-1 pointer-events-none">
           <Image src="/home-bg.jpg" alt="" height={0} width={0} className="h-full w-full object-cover" />
-        </div>
+        </div> 
         <div className="max-w-6xl mx-auto text-center relative z-2">
           <div>
             {settings.homepage.fields.promo_title.value && (
