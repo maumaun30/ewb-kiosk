@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { House } from "lucide-react";
 import type { Data } from "@/lib/settings";
 
 interface SettingsProps {
@@ -29,7 +28,7 @@ const NavBar: React.FC<SettingsProps> = ({ settings }) => {
           </div>
           <div>
             <Link href="/">
-              <House />
+              <Image src="/home-icon.svg" alt="" height={40} width={40} />
             </Link>
           </div>
         </div>
