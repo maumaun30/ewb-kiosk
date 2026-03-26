@@ -1,3 +1,4 @@
+// home
 import { getCategories } from "@/lib/categories";
 import { getSlides } from "@/lib/slides";
 import { getSettings } from "@/lib/settings";
