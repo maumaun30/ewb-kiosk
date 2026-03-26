@@ -17,8 +17,11 @@ export default async function Home() {
       <header className="flex-none">
         <Slider slides={allSlides} />
       </header>
-      <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center">
-        <div className="max-w-6xl mx-auto text-center">
+      <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center relative">
+        <div className="absolute inset-0 h-full w-full z-1 pointer-events-none">
+          <Image src="/home-bg.jpg" alt="" height={0} width={0} className="h-full w-full object-cover" />
+        </div>
+        <div className="max-w-6xl mx-auto text-center relative z-2">
           <div>
             {settings.homepage.fields.promo_title.value && (
               <h2 className="ew-text-green mb-5 max-w-150 mx-auto">
