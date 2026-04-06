@@ -70,7 +70,7 @@ export default async function Home() {
               </Link>
 
               {categories.map((category, index) => {
-                const adjustedIndex = index + 1; // account for "All Promos"
+                const adjustedIndex = index + 1;
                 const col = adjustedIndex % 4;
                 const row = Math.floor(adjustedIndex / 4);
                 const isPink = (row + col) % 2 === 0;
