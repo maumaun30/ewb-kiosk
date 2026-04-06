@@ -18,9 +18,15 @@ export default async function Home() {
       <header className="flex-none">
         <Slider slides={allSlides} />
       </header>
-      <section className="grow ew-bg-purple py-10 px-5 flex flex-col justify-center relative">
+      <section className="grow ew-bg-purple py-20 px-5 flex flex-col relative">
         <div className="absolute inset-0 h-full w-full z-1 pointer-events-none">
-          <Image src="/home-bg.jpg" alt="" height={0} width={0} className="h-full w-full object-cover" />
+          <Image
+            src="/home-bg.jpg"
+            alt=""
+            height={0}
+            width={0}
+            className="h-full w-full object-cover"
+          />
         </div>
         <div className="max-w-6xl mx-auto text-center relative z-2">
           <div>
@@ -44,9 +50,12 @@ export default async function Home() {
                 {settings.homepage.fields.promo_subtitle.value}
               </h3>
             )}
-            <div className="flex justify-center gap-0 flex-wrap">
-              <Link href={`/category/`} className="basis-1/5 grow-0 p-2 flex">
-                <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-purple">
+            <div className="max-w-2xl flex justify-center gap-0 flex-wrap">
+              <Link
+                href={`/category/`}
+                className="aspect-square basis-1/4 grow-0 p-2 flex"
+              >
+                <div className="w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md ew-bg-pink">
                   <Image
                     src="/all-promos-icon.svg"
                     height={80}
@@ -60,29 +69,36 @@ export default async function Home() {
                 </div>
               </Link>
 
-              {categories.map((category, index) => (
-                <Link
-                  key={category.tid}
-                  href={`/category/${category.tid}`}
-                  className="basis-1/5 grow-0 p-2 flex"
-                >
-                  <div
-                    className={`w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md
-        ${index % 2 === 0 ? "ew-bg-pink" : "ew-bg-purple"}`}
+              {categories.map((category, index) => {
+                const adjustedIndex = index + 1; // account for "All Promos"
+                const col = adjustedIndex % 4;
+                const row = Math.floor(adjustedIndex / 4);
+                const isPink = (row + col) % 2 === 0;
+
+                return (
+                  <Link
+                    key={category.tid}
+                    href={`/category/${category.tid}`}
+                    className="aspect-square basis-1/4 grow-0 p-2 flex"
                   >
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.icon}`}
-                      height={80}
-                      width={80}
-                      alt={category.name}
-                      className="aspect-square"
-                    />
-                    <h3 className="text-md text-white mb-0 leading-tight">
-                      {category.name}
-                    </h3>
-                  </div>
-                </Link>
-              ))}
+                    <div
+                      className={`w-full rounded-xl flex items-center justify-center flex-col gap-3 text-center text-white p-3 shadow-md
+          ${isPink ? "ew-bg-pink" : "ew-bg-purple"}`}
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${category.icon}`}
+                        height={80}
+                        width={80}
+                        alt={category.name}
+                        className="aspect-square"
+                      />
+                      <h3 className="text-md text-white mb-0 leading-tight">
+                        {category.name}
+                      </h3>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
