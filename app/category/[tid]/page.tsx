@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { SkeletonTracker } from "@/context/SkeletonLoadingContext";
 
 import CategoryBannerSection from "@/components/category/CategoryBannerSection";
 import CategoryPromoSection from "@/components/category/CategoryPromoSection";
@@ -14,10 +15,10 @@ export default async function CategoryByTid({
 
   return (
     <>
-      <Suspense fallback={<BannerSectionSkeleton />}>
+      <Suspense fallback={<SkeletonTracker><BannerSectionSkeleton /></SkeletonTracker>}>
         <CategoryBannerSection tid={tid} />
       </Suspense>
-      <Suspense fallback={<PromoSectionSkeleton />}>
+      <Suspense fallback={<SkeletonTracker><PromoSectionSkeleton /></SkeletonTracker>}>
         <CategoryPromoSection initialCategory={tid} />
       </Suspense>
     </>

@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { SkeletonTracker } from "@/context/SkeletonLoadingContext";
 
 import CategoryBannerSection from "@/components/category/CategoryBannerSection";
 import CategoryPromoSection from "@/components/category/CategoryPromoSection";
@@ -8,10 +9,10 @@ import PromoSectionSkeleton from "@/components/category/PromoSectionSkeleton";
 export default function Category() {
   return (
     <>
-      <Suspense fallback={<BannerSectionSkeleton />}>
+      <Suspense fallback={<SkeletonTracker><BannerSectionSkeleton /></SkeletonTracker>}>
         <CategoryBannerSection />
       </Suspense>
-      <Suspense fallback={<PromoSectionSkeleton />}>
+      <Suspense fallback={<SkeletonTracker><PromoSectionSkeleton /></SkeletonTracker>}>
         <CategoryPromoSection />
       </Suspense>
     </>
