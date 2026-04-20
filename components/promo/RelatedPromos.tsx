@@ -13,7 +13,7 @@ import "swiper/css/pagination";
 
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
-import PromoCard from "@/components/PromoCard";
+import PromoCard from "./PromoCard";
 
 function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
   const categoryTids = new Set(
