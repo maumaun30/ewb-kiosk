@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import { NavigationProvider } from "@/context/NavigationContext";
+import { SkeletonLoadingProvider } from "@/context/SkeletonLoadingContext";
 
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
@@ -33,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <BodyWrapper fontVariable={poppins.variable}>
+        <SkeletonLoadingProvider>
         <NavigationProvider>
           <IdleOverlay settings={allSettings} />
           <NavBar settings={allSettings} />
           <BackButton />
           <MainWrapper>{children}</MainWrapper>
         </NavigationProvider>
+        </SkeletonLoadingProvider>
         <Footer settings={allSettings} />
       </BodyWrapper>
     </html>

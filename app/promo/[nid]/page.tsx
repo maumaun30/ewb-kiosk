@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { SkeletonTracker } from "@/context/SkeletonLoadingContext";
 
 import PromoDetailSection from "@/components/promo/PromoDetailSection";
 import PromoDetailSkeleton from "@/components/promo/PromoDetailSkeleton";
@@ -14,10 +15,10 @@ export default async function PromoPage({
 
   return (
     <>
-      <Suspense fallback={<PromoDetailSkeleton />}>
+      <Suspense fallback={<SkeletonTracker><PromoDetailSkeleton /></SkeletonTracker>}>
         <PromoDetailSection nid={nid} />
       </Suspense>
-      <Suspense fallback={<RelatedPromosSkeleton />}>
+      <Suspense fallback={<SkeletonTracker><RelatedPromosSkeleton /></SkeletonTracker>}>
         <RelatedPromosSection nid={nid} />
       </Suspense>
     </>
