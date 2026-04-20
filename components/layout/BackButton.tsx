@@ -15,8 +15,8 @@ export default function BackButton() {
   const [navLoading, setNavLoading] = useState(false);
   const isFirstRender = useRef(true);
   const hadSkeletons = useRef(false);
-  const shortTimer = useRef<ReturnType<typeof setTimeout>>();
-  const safetyTimer = useRef<ReturnType<typeof setTimeout>>();
+  const shortTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const safetyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // When pathname changes: reset skeleton tracking and start timers
   useEffect(() => {
