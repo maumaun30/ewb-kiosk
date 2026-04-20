@@ -6,7 +6,7 @@ import type { Category, Promo, Location, CardType } from "@/lib/types";
 
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
-import PromoCard from "@/components/PromoCard";
+import PromoCard from "./PromoCard";
 
 interface PromoFilterProps {
   categories: Category[];

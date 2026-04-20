@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import ServerMaintenance from "@/components/ServerMaintenance";
+import ServerMaintenance from "@/components/layout/ServerMaintenance";
 
 interface ErrorPageProps {
   error: Error & { digest?: string };

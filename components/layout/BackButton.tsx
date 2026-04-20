@@ -15,8 +15,7 @@ export default function BackButton() {
   }
 
   const handleClick = () => {
-    document.dispatchEvent(new CustomEvent("navigation-start"));
-    const previousPath = goBack(); // pops current, returns previous
+    const previousPath = goBack();
     router.push(previousPath ?? "/");
   };
 
