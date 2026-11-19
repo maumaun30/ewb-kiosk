@@ -7,6 +7,7 @@ import type { Category, Promo, Location, CardType } from "@/lib/types";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
 import PromoCard from "./PromoCard";
+import FilterSelect, { type FilterOption } from "./FilterSelect";
 
 interface PromoFilterProps {
   categories: Category[];
@@ -19,6 +20,13 @@ interface PromoFilterProps {
 const ITEMS_PER_PAGE = 9;
 
 type SortOption = "date_desc" | "date_asc" | "name_asc" | "name_desc";
+
+const SORT_OPTIONS: FilterOption<SortOption>[] = [
+  { value: "date_desc", label: "Newest First" },
+  { value: "date_asc", label: "Oldest First" },
+  { value: "name_asc", label: "A → Z" },
+  { value: "name_desc", label: "Z → A" },
+];
 
 export default function PromoFilter({
   categories,
@@ -97,18 +105,18 @@ export default function PromoFilter({
     currentPage * ITEMS_PER_PAGE,
   );
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(e.target.value);
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
     setCurrentPage(1);
   };
 
-  const handleCardTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCardType(e.target.value);
+  const handleCardTypeChange = (value: string) => {
+    setSelectedCardType(value);
     setCurrentPage(1);
   };
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLocation(e.target.value);
+  const handleLocationChange = (value: string) => {
+    setSelectedLocation(value);
     setCurrentPage(1);
   };
 
@@ -117,8 +125,8 @@ export default function PromoFilter({
     setCurrentPage(1);
   };
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(e.target.value as SortOption);
+  const handleSortChange = (value: SortOption) => {
+    setSortOption(value);
     setCurrentPage(1);
   };
 
@@ -146,7 +154,7 @@ export default function PromoFilter({
   return (
     <>
       {/* Filters */}
-      <div className="max-w-6xl mx-auto mb-10 flex flex-wrap gap-4 items-center justify-end">
+      <div className="max-w-6xl mx-auto mb-10">
         <input
           type="text"
           placeholder="Search a promo here"
@@ -155,98 +163,53 @@ export default function PromoFilter({
           className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink) w-full mb-10"
         />
 
-        <div>
-          <label htmlFor="categories" className="block mb-2">
-            Category
-          </label>
-          <select
-            name="categories"
-            id="categories"
+        <div className="flex flex-nowrap gap-4 items-end">
+          <FilterSelect
+            label="Category"
             value={selectedCategory}
             onChange={handleCategoryChange}
-            className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
-          >
-            <option value="">All</option>
-            {categories?.map((category) => (
-              <option key={category.tid} value={category.tid}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="card_types" className="block mb-2">
-            Card Type
-          </label>
-          <select
-            name="card_types"
-            id="card_types"
+            options={[
+              { value: "", label: "All" },
+              ...(categories ?? []).map((c) => ({ value: c.tid, label: c.name })),
+            ]}
+          />
+          <FilterSelect
+            label="Card Type"
             value={selectedCardType}
             onChange={handleCardTypeChange}
-            className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
-          >
-            <option value="">All Cards</option>
-            {card_types?.map((card_type) => (
-              <option key={card_type.tid} value={card_type.tid}>
-                {card_type.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="locations" className="block mb-2">
-            Location
-          </label>
-          <select
-            name="locations"
-            id="locations"
+            options={[
+              { value: "", label: "All Cards" },
+              ...(card_types ?? []).map((c) => ({ value: c.tid, label: c.name })),
+            ]}
+          />
+          <FilterSelect
+            label="Location"
             value={selectedLocation}
             onChange={handleLocationChange}
-            className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
-          >
-            <option value="">All</option>
-            {locations?.map((location) => (
-              <option key={location.tid} value={location.tid}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="sort" className="block mb-2">
-            Sort by
-          </label>
-          <select
-            name="sort"
-            id="sort"
+            align="right"
+            options={[
+              { value: "", label: "All" },
+              ...(locations ?? []).map((l) => ({ value: l.tid, label: l.name })),
+            ]}
+          />
+          <FilterSelect
+            label="Sort by"
             value={sortOption}
             onChange={handleSortChange}
-            className="border border-black rounded-4xl px-5 py-3 text-md bg-white focus:outline-none focus:ring-3 focus:ring-(--pink)"
-          >
-            <option value="date_desc">Newest First</option>
-            <option value="date_asc">Oldest First</option>
-            <option value="name_asc">A → Z</option>
-            <option value="name_desc">Z → A</option>
-          </select>
-        </div>
+            align="right"
+            options={SORT_OPTIONS}
+          />
 
-        {isFiltered && (
-          <div>
-            <label htmlFor="reset_filters" className="block mb-2">
-              Filters
-            </label>
+          {isFiltered && (
             <button
-              id="reset_filters"
+              type="button"
               onClick={handleReset}
-              className="px-5 py-3 text-md rounded-4xl border border-black bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors"
+              className="shrink-0 px-5 py-3 text-md rounded-4xl border border-black bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors"
             >
               ✕ Reset
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Scroll anchor sits just above the grid */}

@@ -109,6 +109,16 @@
 }
 
 @layer utilities {
+  .promo-mechanics-body {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #333;
+  }
+
+  .promo-mechanics-body p {
+    margin-bottom: 14px;
+  }
+
   .promo-mechanics .table-fc-hl {
     margin: 32px 0;
   }

@@ -13,61 +13,81 @@ export default function BackButton() {
   const { count: skeletonCount } = useSkeletonLoading();
 
   const [navLoading, setNavLoading] = useState(false);
+  // Whether the destination page has rendered any skeletons since navigation started
+  const [hadSkeletons, setHadSkeletons] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const [prevSkeletonCount, setPrevSkeletonCount] = useState(skeletonCount);
+  const hadSkeletonsRef = useRef(false);
   const isFirstRender = useRef(true);
-  const hadSkeletons = useRef(false);
-  const shortTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const safetyTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  // When pathname changes: reset skeleton tracking and start timers
+  // Adjust state while rendering when inputs change, instead of in effects
+  // (https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes)
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setHadSkeletons(false);
+  }
+  if (skeletonCount !== prevSkeletonCount) {
+    setPrevSkeletonCount(skeletonCount);
+    if (navLoading) {
+      if (skeletonCount > 0) {
+        setHadSkeletons(true);
+      } else if (hadSkeletons) {
+        // All skeletons on the new page resolved: navigation is done
+        setHadSkeletons(false);
+        setNavLoading(false);
+      }
+    }
+  }
+
+  // Timer callbacks read the latest value through a ref
+  useEffect(() => {
+    hadSkeletonsRef.current = hadSkeletons;
+  }, [hadSkeletons]);
+
+  // After a route change: clear quickly if no skeletons appear, with a hard safety fallback
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    hadSkeletons.current = false;
-    clearTimeout(shortTimer.current);
-    clearTimeout(safetyTimer.current);
-
-    // Pages with no skeletons: clear after 300ms
-    shortTimer.current = setTimeout(() => {
-      if (!hadSkeletons.current) setNavLoading(false);
+    const shortTimer = setTimeout(() => {
+      if (!hadSkeletonsRef.current) {
+        setNavLoading(false);
+      }
     }, 300);
-
-    // Hard safety fallback
-    safetyTimer.current = setTimeout(() => setNavLoading(false), 5000);
+    const safetyTimer = setTimeout(() => setNavLoading(false), 5000);
+    return () => {
+      clearTimeout(shortTimer);
+      clearTimeout(safetyTimer);
+    };
   }, [pathname]);
-
-  // Keep spinner alive until all skeletons resolve
-  useEffect(() => {
-    if (!navLoading) return;
-    if (skeletonCount > 0) {
-      hadSkeletons.current = true;
-      clearTimeout(shortTimer.current);
-    } else if (hadSkeletons.current) {
-      hadSkeletons.current = false;
-      clearTimeout(safetyTimer.current);
-      setNavLoading(false);
-    }
-  }, [skeletonCount, navLoading]);
 
   // Detect any link navigation
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest("a");
-      if (!target?.href || target.href.startsWith("#") || target.target) return;
+      if (!target?.href || target.href.startsWith("#") || target.target) {
+        return;
+      }
       const targetPath = new URL(target.href, window.location.href).pathname;
-      if (targetPath === window.location.pathname) return;
+      if (targetPath === window.location.pathname) {
+        return;
+      }
       setNavLoading(true);
     };
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
-  if (pathname === "/") return null;
+  if (pathname === "/") {
+    return null;
+  }
 
   const handleClick = () => {
     const previousPath = goBack() ?? "/";
-    if (previousPath === pathname) return;
+    if (previousPath === pathname) {
+      return;
+    }
     setNavLoading(true);
     router.push(previousPath);
   };

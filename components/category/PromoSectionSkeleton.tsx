@@ -1,7 +1,11 @@
+import { placeholderIds } from "@/lib/placeholders";
+
+const PROMO_CARD_IDS = placeholderIds("promo-card", 9);
+
 function PromoCardSkeleton() {
   return (
     <div className="border border-gray-200 rounded-3xl overflow-hidden shadow-sm bg-white flex flex-col animate-pulse">
-      <div className="w-full h-60 bg-gray-200" />
+      <div className="w-full aspect-10/7 bg-gray-200" />
       <div className="p-4 flex flex-col gap-3">
         <div className="h-7 w-3/4 rounded bg-gray-200" />
         <div className="h-4 w-1/2 rounded bg-gray-200" />
@@ -34,8 +38,8 @@ export default function PromoSectionSkeleton() {
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-3 gap-6">
-        {Array.from({ length: 9 }).map((_, i) => (
-          <PromoCardSkeleton key={i} />
+        {PROMO_CARD_IDS.map((id) => (
+          <PromoCardSkeleton key={id} />
         ))}
       </div>
     </section>
