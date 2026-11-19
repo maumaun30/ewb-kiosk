@@ -42,7 +42,12 @@ function getRelatedPromos(current: Promo, all: Promo[]): Promo[] {
         cardTypeTids.has(ct.tid),
       );
 
-      return matchesCategory ?? matchesLocation ?? matchesCardType;
+      // `??` would stop at the first `false`; any single match should count.
+      return (
+        matchesCategory === true ||
+        matchesLocation === true ||
+        matchesCardType === true
+      );
     })
     .slice(0, 9);
 }
