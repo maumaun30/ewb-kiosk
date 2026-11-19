@@ -5,6 +5,8 @@ import PromoDetailSection from "@/components/promo/PromoDetailSection";
 import PromoDetailSkeleton from "@/components/promo/PromoDetailSkeleton";
 import RelatedPromosSection from "@/components/promo/RelatedPromosSection";
 import RelatedPromosSkeleton from "@/components/promo/RelatedPromosSkeleton";
+import PromoMechanicsSection from "@/components/promo/PromoMechanicsSection";
+import PromoMechanicsSkeleton from "@/components/promo/PromoMechanicsSkeleton";
 
 export default async function PromoPage({
   params,
@@ -17,6 +19,9 @@ export default async function PromoPage({
     <>
       <Suspense fallback={<SkeletonTracker><PromoDetailSkeleton /></SkeletonTracker>}>
         <PromoDetailSection nid={nid} />
+      </Suspense>
+      <Suspense fallback={<SkeletonTracker><PromoMechanicsSkeleton /></SkeletonTracker>}>
+        <PromoMechanicsSection nid={nid} />
       </Suspense>
       <Suspense fallback={<SkeletonTracker><RelatedPromosSkeleton /></SkeletonTracker>}>
         <RelatedPromosSection nid={nid} />

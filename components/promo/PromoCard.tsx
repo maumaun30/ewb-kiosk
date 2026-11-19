@@ -1,5 +1,5 @@
-// components/PromoCard.tsx
 import type { Promo } from "@/lib/types";
+import { buildPromoTags } from "@/lib/promo-tags";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -9,32 +9,26 @@ interface PromoCardProps {
   promo: Promo;
 }
 
-function buildPromoTags(promo: Promo) {
-  return [
-    ...(promo.field_categories_reference?.map((t) => ({
-      ...t,
-      style: "border-(--purple) bg-[rgba(84,39,133,.2)]",
-    })) ?? []),
-    ...(promo.field_card_type?.map((t) => ({
-      ...t,
-      style: "border-(--pink) bg-[rgba(178,0,110,0.2)]",
-    })) ?? []),
-    ...(promo.field_locations?.map((t) => ({
-      ...t,
-      style: "border-(--green) bg-[rgba(214,224,77,0.2)]",
-    })) ?? []),
-  ];
+const MAX_VISIBLE_TAGS = 2;
+const EXCERPT_WORDS = 20;
+
+function buildExcerpt(html: string) {
+  const words = html.replace(/<[^>]*>/g, " ").trim().split(/\s+/);
+  return words.length > EXCERPT_WORDS
+    ? `${words.slice(0, EXCERPT_WORDS).join(" ")}…`
+    : words.join(" ");
 }
 
 export default function PromoCard({ promo }: PromoCardProps) {
   const promoTags = buildPromoTags(promo);
+  const visibleTags = promoTags.slice(0, MAX_VISIBLE_TAGS);
+  const hiddenTagCount = promoTags.length - visibleTags.length;
 
   return (
-    <div
-      className={`relative border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col`}
-    >
+    <div className="relative h-full border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col">
       <Link
         href={`/promo/${promo.nid}`}
+        aria-label={promo.title}
         className="absolute inset-0 h-full w-full z-1"
       />
 
@@ -44,44 +38,45 @@ export default function PromoCard({ promo }: PromoCardProps) {
           alt={promo.title}
           height={0}
           width={0}
-          className={`w-full h-60 object-cover`}
+          className="w-full aspect-10/7 object-cover shrink-0"
         />
       )}
 
       <div className="p-4 grow flex flex-col gap-2">
-        <h3 className="text-2xl leading-snug capitalize mb-0">{promo.title}</h3>
+        <h3 className="text-xl leading-snug capitalize mb-0 line-clamp-2">
+          {promo.title}
+        </h3>
 
         {promo.field_promo_duration && (
-          <em className="font-light mb-5">{promo.field_promo_duration}</em>
+          <em className="text-base font-light text-gray-600 line-clamp-1">
+            {promo.field_promo_duration}
+          </em>
         )}
 
         {promo.field_excerpt && (
-          <div
-            className="mb-2"
-            dangerouslySetInnerHTML={{
-              __html: (() => {
-                const words = promo.field_excerpt
-                  .replace(/<[^>]*>/g, " ")
-                  .trim()
-                  .split(/\s+/);
-                return words.length > 20
-                  ? `${words.slice(0, 20).join(" ")}…`
-                  : words.join(" ");
-              })(),
-            }}
+          <p
+            className="text-base leading-snug text-gray-800 mb-0 line-clamp-3"
+            dangerouslySetInnerHTML={{ __html: buildExcerpt(promo.field_excerpt) }}
           />
         )}
 
-        <div className="flex flex-wrap gap-x-1 gap-y-2 mb-4">
-          {promoTags.map((tag) => (
-            <span
-              key={tag.tid}
-              className={`border ${tag.style} px-4 py-1 rounded-full text-black text-[12px] text-nowrap`}
-            >
-              {tag.name}
-            </span>
-          ))}
-        </div>
+        {promoTags.length > 0 && (
+          <div className="flex flex-nowrap gap-1 overflow-hidden mt-1 mb-3">
+            {visibleTags.map((tag) => (
+              <span
+                key={tag.tid}
+                className={`border ${tag.style} px-3 py-1 rounded-full text-black text-[12px] text-nowrap truncate min-w-0`}
+              >
+                {tag.name}
+              </span>
+            ))}
+            {hiddenTagCount > 0 && (
+              <span className="shrink-0 border border-gray-300 bg-gray-100 px-3 py-1 rounded-full text-gray-700 text-[12px] text-nowrap">
+                +{hiddenTagCount}
+              </span>
+            )}
+          </div>
+        )}
 
         <div className="mt-auto">
           <Link
