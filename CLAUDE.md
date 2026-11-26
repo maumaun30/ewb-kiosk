@@ -9,6 +9,7 @@ npm run dev       # Start dev server
 npm run build     # Production build
 npm run start     # Start production server
 npm run lint      # Run ESLint
+npm run typecheck  # Run tsc --noEmit
 ```
 
 No test framework is configured.
@@ -48,4 +49,4 @@ This is a Next.js 16 App Router kiosk application for EastWest Bank (Philippines
 
 ### ESLint
 
-The config (`eslint.config.mjs`) is very strict: no `any`, no unsafe operations, typed imports, import cycle detection. Run `npm run lint` before committing — CI will fail on violations.
+The config (`eslint.config.mjs`) is very strict: no `any`, no unsafe operations, typed imports, import cycle detection. Run `npm run lint` before committing — CI (`.github/workflows/ci.yml`) runs lint + typecheck on PRs to `staging`/`main` and fails on violations.
